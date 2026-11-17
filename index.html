@@ -202,6 +202,12 @@
   .carsum{padding:10px 13px;font-size:.8rem;margin-top:10px}
   .chips{margin-top:9px}
   .chipf{padding:6px 11px;font-size:.68rem}
+
+  /* ===== DOCK: main buttons live at the bottom ===== */
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(8,8,11,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(192,163,95,.28);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px;box-shadow:0 -12px 32px rgba(0,0,0,.45)}
+  .dock .viewrow{margin:0}
+  .dock .bottombar{position:static;background:transparent;border-top:1px solid rgba(255,255,255,.07);border-radius:0;padding:8px 2px 0;box-shadow:none}
+  body{padding-bottom:172px}
 </style>
 </head>
 <body>
@@ -222,11 +228,7 @@
     <button id="fl-3f">3rd Floor <span class="cnt"><b id="cnt3">0</b> open</span></button>
     <button id="fl-4f" class="on">4th Floor <span class="cnt"><b id="cnt4">0</b> open</span></button>
   </div>
-  <div class="viewrow">
-    <div class="seg viewseg"><button id="vw-map" class="on">Map</button><button id="vw-cars">Cars <span class="cnt"><b id="carCount">0</b></span></button></div>
-    <button class="arrivalBtn" id="arrivalBtn">+ Arrival</button>
-    <button class="scanBtn" id="quickScan" type="button">Scan</button>
-  </div>
+  
   </div>
 
   <button class="statsum" id="statSum" type="button"><span id="statSumTx">Deck status</span><span class="chev">▾</span></button>
@@ -250,6 +252,12 @@
   <p class="hint"><b class="hg">Tap</b> available <i>·</i> <b class="hr">Tap again</b> taken <i>·</i> <b>Tap again</b> clear<br><span class="hsub">Shared live — everyone on this link sees the same deck · tap a parked car to open its ticket</span></p>
 </div>
 
+<div class="dock">
+<div class="viewrow">
+    <div class="seg viewseg"><button id="vw-map" class="on">Map</button><button id="vw-cars">Cars <span class="cnt"><b id="carCount">0</b></span></button></div>
+    <button class="arrivalBtn" id="arrivalBtn">+ Arrival</button>
+    <button class="scanBtn" id="quickScan" type="button">Scan</button>
+  </div>
 <div class="bottombar"><div class="bb-in">
   <div class="legend">
     <span><i style="background:var(--green)"></i>Available</span>
@@ -261,6 +269,7 @@
     <button class="reset" id="resetBtn">Reset floor</button>
   </div>
 </div></div>
+</div>
 
 <div class="scrim" id="scrim"></div>
 <div class="sheet" id="carSheet"></div>
