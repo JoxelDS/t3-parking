@@ -258,6 +258,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
@@ -603,15 +604,26 @@ function saveArrival(){
 function stopScan(){ if(scanStream){ scanStream.getTracks().forEach(t=>t.stop()); scanStream=null; } const v=document.getElementById('scanVid'); if(v) v.style.display='none'; }
 async function startScan(){
   const vid=document.getElementById('scanVid');
-  if(!('BarcodeDetector' in window) || !navigator.mediaDevices){ alert('Scanning is not supported on this phone — type the ticket number.'); return; }
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ alert('No camera access on this phone — type the ticket number.'); return; }
+  if(!('BarcodeDetector' in window) && !window.jsQR){ alert('Scanning is not supported on this phone — type the ticket number.'); return; }
   try{
     scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
     vid.srcObject=scanStream; vid.style.display='block'; await vid.play();
-    const det=new BarcodeDetector({formats:['code_128','code_39','ean_13','qr_code']});
-    const tick=async()=>{ if(!scanStream) return;
-      try{ const codes=await det.detect(vid); if(codes && codes.length){ document.getElementById('afTicket').value=codes[0].rawValue; stopScan(); return; } }catch(e){}
-      setTimeout(tick,350); };
-    tick();
+    if('BarcodeDetector' in window){
+      const det=new BarcodeDetector({formats:['code_128','code_39','ean_13','qr_code']});
+      const tick=async()=>{ if(!scanStream) return;
+        try{ const codes=await det.detect(vid); if(codes && codes.length){ document.getElementById('afTicket').value=codes[0].rawValue; stopScan(); return; } }catch(e){}
+        setTimeout(tick,350); };
+      tick();
+    } else {
+      const cv=document.createElement('canvas'); const cx=cv.getContext('2d',{willReadFrequently:true});
+      const tick=()=>{ if(!scanStream) return;
+        if(vid.readyState===vid.HAVE_ENOUGH_DATA && vid.videoWidth){ cv.width=vid.videoWidth; cv.height=vid.videoHeight; cx.drawImage(vid,0,0,cv.width,cv.height);
+          try{ const img=cx.getImageData(0,0,cv.width,cv.height); const code=jsQR(img.data,cv.width,cv.height); if(code && code.data){ document.getElementById('afTicket').value=code.data; stopScan(); return; } }catch(e){}
+        }
+        setTimeout(tick,300); };
+      tick();
+    }
   }catch(e){ alert('Camera unavailable — type the ticket number.'); stopScan(); }
 }
 document.getElementById('arrivalBtn').addEventListener('click',()=>openArrival(null));
