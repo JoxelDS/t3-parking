@@ -220,6 +220,10 @@
   .maphead{display:none}
   #quickScan,#afScan{display:none!important}
   .dock{box-sizing:border-box}
+
+  /* ===== MAP LABELS: clean at rest, detail on zoom ===== */
+  .viewport svg text.unit{opacity:0;transition:opacity .25s ease}
+  .viewport.zin svg text.unit{opacity:1}
 </style>
 </head>
 <body>
@@ -408,7 +412,7 @@ function attachZoom(vp,zm,badge){
     Z.tx=Math.min(0,Math.max(minTx,Z.tx)); Z.ty=Math.min(0,Math.max(minTy,Z.ty));
     if(Z.s===1){Z.tx=0;Z.ty=0;}
   }
-  function apply(){ clamp(); zm.style.transform=`translate(${Z.tx}px,${Z.ty}px) scale(${Z.s})`; }
+  function apply(){ clamp(); zm.style.transform=`translate(${Z.tx}px,${Z.ty}px) scale(${Z.s})`; vp.classList.toggle('zin', Z.s>=1.6); }
   function zoomAt(cx,cy,ns){
     const r=vp.getBoundingClientRect(); const mx=cx-r.left,my=cy-r.top;
     const px=(mx-Z.tx)/Z.s, py=(my-Z.ty)/Z.s;
@@ -503,6 +507,7 @@ function show(){
   document.getElementById('tw-t12').classList.toggle('on', tower==='t12');
   document.getElementById('fl-3f').classList.toggle('on', floor==='3f');
   document.getElementById('fl-4f').classList.toggle('on', floor==='4f');
+  const __vp=document.querySelector('#pane-'+tower+'-'+floor+' .viewport'); if(__vp && __vp._zoom) __vp._zoom.reset();
   Object.keys(F).forEach(k=>paint(k));
 }
 document.getElementById('tw-t3').addEventListener('click',()=>{ tower='t3'; show(); });
