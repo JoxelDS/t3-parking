@@ -97,6 +97,51 @@
   .mh-count{font-family:"Space Grotesk",sans-serif;font-size:.64rem;font-weight:700;letter-spacing:.22em;color:var(--gold)}
   .bb-right{display:flex;align-items:center;gap:14px;margin-left:auto}
   @media(max-width:640px){ .bb-in{justify-content:center} .bb-right{margin-left:0} .legend{justify-content:center} }
+
+  .viewrow{display:flex;gap:10px;margin-top:10px}
+  .viewseg{flex:1;margin:0}
+  .arrivalBtn{appearance:none;border:0;border-radius:15px;padding:0 22px;background:linear-gradient(135deg,var(--gold-l),var(--gold));color:#171106;font:inherit;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.92rem;letter-spacing:.08em;cursor:pointer;box-shadow:0 10px 22px -8px rgba(192,163,95,.75)}
+  .arrivalBtn:active{transform:scale(.96)}
+  .carshead{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+  .cstat{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));border:1px solid rgba(192,163,95,.25);border-radius:16px;padding:13px 6px 11px;text-align:center}
+  .cstat b{font-family:"Space Grotesk",sans-serif;font-size:1.28rem;font-weight:700;display:block}
+  .cstat span{font-size:.56rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:block;margin-top:4px}
+  .search{width:100%;margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px;color:var(--ink);font:inherit;font-size:.95rem}
+  .search:focus{outline:none;border-color:rgba(192,163,95,.6)}
+  .cargrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:12px}
+  .carcard{background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));border:1px solid rgba(192,163,95,.25);border-radius:16px;padding:13px;cursor:pointer;position:relative;text-align:left}
+  .carcard:active{transform:scale(.98)}
+  .carcard .tk{font-family:"Space Grotesk",sans-serif;font-size:1.14rem;font-weight:700}
+  .carcard .spot{position:absolute;top:11px;right:11px;background:rgba(192,163,95,.15);color:var(--gold-l);border:1px solid rgba(192,163,95,.4);font-size:.64rem;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:99px}
+  .carcard .el{color:#2ee59d;font-family:"Space Grotesk",sans-serif;font-weight:700;margin-top:3px;font-size:.95rem}
+  .carcard .meta{color:var(--muted);font-size:.76rem;margin-top:5px;line-height:1.5}
+  .bdg{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.1em;padding:2.5px 7px;border-radius:99px;margin-top:7px;margin-right:5px;text-transform:uppercase}
+  .bdg.paid{background:rgba(46,229,157,.14);color:#2ee59d;border:1px solid rgba(46,229,157,.4)}
+  .bdg.due{background:rgba(255,176,32,.12);color:#ffb020;border:1px solid rgba(255,176,32,.4)}
+  .bdg.key{background:rgba(255,89,100,.13);color:#ff8589;border:1px solid rgba(255,89,100,.45)}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:#131109;border-top:1px solid rgba(192,163,95,.45);border-radius:24px 24px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(106%);transition:transform .34s var(--ease);max-width:640px;margin:0 auto;max-height:88vh;overflow-y:auto;box-shadow:0 -18px 50px rgba(0,0,0,.6)}
+  .sheet.on{transform:none}
+  .sheetttl{font-family:"Space Grotesk",sans-serif;font-size:1.06rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .sheetttl .sub{display:block;font-size:.68rem;color:var(--gold);letter-spacing:.2em;margin-top:4px}
+  .srow{display:flex;justify-content:space-between;gap:14px;padding:8.5px 0;border-bottom:1px solid rgba(255,255,255,.055);font-size:.92rem}
+  .srow span{color:var(--muted);flex:none}
+  .srow b{text-align:right;font-weight:650}
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px}
+  .abtn{appearance:none;border-radius:13px;padding:13px 10px;font:inherit;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid var(--line);background:#1c1813;color:var(--ink)}
+  .abtn.gold{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:#171106;border:0}
+  .abtn.ghost{background:transparent}
+  .abtn.danger{background:rgba(255,89,100,.08);color:#ff8589;border-color:rgba(255,89,100,.45)}
+  .abtn:active{transform:scale(.97)}
+  .field{margin-top:12px}
+  .field label{display:block;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .field input,.field select{width:100%;background:#0d0b08;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink);font:inherit;font-size:.95rem}
+  .field input:focus,.field select:focus{outline:none;border-color:rgba(192,163,95,.65)}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stall.hascar text{font-weight:700}
+  .stall.keyx rect{stroke:#ffb020 !important;filter:drop-shadow(0 0 7px rgba(255,176,32,.85))}
+  .unit.perm{fill:var(--gold-l);font-weight:700}
   .floorpane{display:none}.floorpane.on{display:block}
   .bottombar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(0,0,0,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(192,163,95,.35);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
   .bb-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -132,7 +177,12 @@
   <div class="seg" role="tablist">
     <button id="fl-3f">3rd Floor <span class="cnt"><b id="cnt3">0</b> open</span></button>
     <button id="fl-4f" class="on">4th Floor <span class="cnt"><b id="cnt4">0</b> open</span></button>
-  </div></div>
+  </div>
+  <div class="viewrow">
+    <div class="seg viewseg"><button id="vw-map" class="on">Map</button><button id="vw-cars">Cars <span class="cnt"><b id="carCount">0</b></span></button></div>
+    <button class="arrivalBtn" id="arrivalBtn">+ Arrival</button>
+  </div>
+  </div>
 
   <div class="stats">
     <div class="chip">Deck Status</div>
@@ -143,7 +193,19 @@
 
   <div id="panes"></div>
 
-  <p class="hint"><b class="hg">Tap</b> available <i>·</i> <b class="hr">Tap again</b> taken <i>·</i> <b>Tap again</b> clear<br><span class="hsub">Shared live — everyone on this link sees the same deck</span></p>
+  <div id="carsView" style="display:none">
+    <div class="carshead">
+      <div class="cstat"><b id="cvNow">0</b><span>Parked now</span></div>
+      <div class="cstat"><b id="cvIn">0</b><span>In today</span></div>
+      <div class="cstat"><b id="cvOut">0</b><span>Out today</span></div>
+      <div class="cstat"><b id="cvRev">$0</b><span>Revenue</span></div>
+    </div>
+    <input id="carSearch" class="search" type="search" placeholder="Search ticket, plate, name, unit, spot...">
+    <div id="carGrid" class="cargrid"></div>
+    <p class="hint" id="carsEmpty">No cars parked right now. Tap + Arrival to park the first one.</p>
+  </div>
+
+  <p class="hint"><b class="hg">Tap</b> available <i>·</i> <b class="hr">Tap again</b> taken <i>·</i> <b>Tap again</b> clear<br><span class="hsub">Shared live — everyone on this link sees the same deck · tap a parked car to open its ticket</span></p>
 </div>
 
 <div class="bottombar"><div class="bb-in">
@@ -158,6 +220,41 @@
   </div>
 </div></div>
 
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="carSheet"></div>
+<div class="sheet" id="arrivalSheet">
+  <div class="sheetttl" id="afTitle">New Arrival</div>
+  <div class="field"><label>Ticket # — scan the key tag or type it</label>
+    <div style="display:flex;gap:8px"><input id="afTicket" inputmode="numeric" placeholder="e.g. 6211" style="flex:1"><button class="abtn ghost" id="afScan" type="button" style="flex:none;padding:0 16px">Scan</button></div>
+    <video id="scanVid" playsinline style="display:none;width:100%;border-radius:12px;margin-top:8px"></video>
+  </div>
+  <div class="frow">
+    <div class="field"><label>Floor</label><div class="seg" style="margin:0"><button id="afF3" type="button">3rd</button><button id="afF4" type="button" class="on">4th</button></div></div>
+    <div class="field"><label>Spot #</label><input id="afSpot" inputmode="numeric" placeholder="Spot"></div>
+  </div>
+  <div class="frow">
+    <div class="field"><label>Position</label><select id="afPos"><option value="">—</option><option value="F">Front</option><option value="B">Back</option></select></div>
+    <div class="field"><label>Pricing</label><select id="afTier"><option value="resident">Resident</option><option value="validation">Validation</option><option value="commercial">Commercial</option><option value="weekly">Weekly</option></select></div>
+  </div>
+  <div class="frow">
+    <div class="field"><label>Guest name</label><input id="afName" placeholder="Name"></div>
+    <div class="field"><label>Phone</label><input id="afPhone" inputmode="tel" placeholder="(***) ***-0000"></div>
+  </div>
+  <div class="frow">
+    <div class="field"><label>Visiting unit #</label><input id="afUnit" placeholder="Unit"></div>
+    <div class="field"><label>License plate</label><input id="afPlate" placeholder="Plate"></div>
+  </div>
+  <div class="frow">
+    <div class="field"><label>Make</label><input id="afMake" placeholder="Make"></div>
+    <div class="field"><label>Color</label><input id="afColor" placeholder="Color"></div>
+  </div>
+  <div class="field"><label>Parked by (driver)</label><input id="afDriver" placeholder="Driver name"></div>
+  <div class="actions">
+    <button class="abtn gold" id="afSave" type="button">Park car</button>
+    <button class="abtn ghost" id="afCancel" type="button">Cancel</button>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
@@ -171,6 +268,7 @@ const FIREBASE_CONFIG = {
   appId: "1:877941758797:web:7af2c8983d1a179c197504"
 };
 const NS="http://www.w3.org/2000/svg";
+const PERM={"3-131":"H301","4-165":"703","4-155":"1001","3-9":"1604","3-126":"1805","3-34":"1604","3-108":"1806","3-87":"UPH2","3-77":"309","4-194":"1003","3-75":"1101-B","3-53":"1201","4-223":"TS5","4-228":"TS3","4-191":"906"};
 const FLOORS = {"t3-4f": {"name": "Tower 3 \u00b7 4th Floor", "tower": "t3", "node": "t3-4f/spots", "ls": "t3-4f-state", "view": "0 0 1240 880", "deco": "<rect class=\"zone static\" x=\"2\" y=\"58\" width=\"1236\" height=\"800\" rx=\"22\"/><defs><pattern id=\"hzT34\" width=\"16\" height=\"26\" patternUnits=\"userSpaceOnUse\"><rect width=\"16\" height=\"26\" fill=\"#f7c948\"/><rect width=\"8\" height=\"26\" fill=\"#141414\"/></pattern></defs><rect x=\"375\" y=\"212\" width=\"380\" height=\"26\" fill=\"url(#hzT34)\"/><text x=\"565\" y=\"262\" text-anchor=\"middle\" font-size=\"21\" font-weight=\"800\" fill=\"#e5484d\" letter-spacing=\"1\">VALET PLEASE DRIVE SLOW 5mph</text><g class=\"static\" transform=\"rotate(28 455 483)\"><rect x=\"415\" y=\"455\" width=\"80\" height=\"56\" fill=\"#1c2434\"/><text x=\"455\" y=\"479\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#aebadd\">Elev</text><text x=\"455\" y=\"501\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"800\" fill=\"#aebadd\">T3</text></g><text class=\"static\" x=\"1135\" y=\"335\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"800\" fill=\"#d7e0f2\">4th Floor</text><text class=\"static\" x=\"1135\" y=\"369\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"800\" fill=\"#d7e0f2\">Tower 3</text><text class=\"unit static\" x=\"868\" y=\"392\">T2-1003</text>", "seed": {"186": "avail", "196": "avail", "197": "avail", "198": "avail", "199": "avail", "200": "avail", "209": "avail", "211": "avail", "227": "avail", "190": "taken", "233": "taken"}, "spots": [["205", "T3-1502", 105.0, 92, 56, 98, "top"], ["204", "T3-1501", 162.5, 92, 56, 98, "top"], ["203", "T3-1406", 220.0, 92, 56, 98, "top"], ["202", "T3-1405", 277.5, 92, 56, 98, "top"], ["201", "T3-1404", 335.0, 92, 56, 98, "top"], ["200", "T3-1403", 392.5, 92, 56, 98, "top"], ["199", "T3-1402", 450.0, 92, 56, 98, "top"], ["198", "T3-1401", 507.5, 92, 56, 98, "top"], ["197", "T3-1006", 565.0, 92, 56, 98, "top"], ["196", "T3-1005", 622.5, 92, 56, 98, "top"], ["195", "T3-1004", 680.0, 92, 56, 98, "top"], ["194", "T3-1003", 737.5, 92, 56, 98, "top"], ["193", "T3-1002", 795.0, 92, 56, 98, "top"], ["192", "T3-1001", 852.5, 92, 56, 98, "top"], ["191", "T3-906", 910.0, 92, 56, 98, "top"], ["190", "T3-905", 967.5, 92, 56, 98, "top"], ["189", "T3-904", 1025.0, 92, 56, 98, "top"], ["188", "T3-903", 1082.5, 92, 56, 98, "top"], ["187", "T3-902", 1140.0, 92, 56, 98, "top"], ["186", "T3-901", 1197.5, 92, 56, 98, "top"], ["206", "T3-1503", 18, 232, 66, 52, "side"], ["207", "T3-1504", 18, 292, 66, 52, "side"], ["208", "T3-1505", 18, 352, 66, 52, "side"], ["209", "T3-1506", 18, 412, 66, 52, "side"], ["210", "T3-1801", 18, 472, 66, 52, "side"], ["211", "T3-1802", 18, 532, 66, 52, "side"], ["212", "T3-1803", 18, 592, 66, 52, "side"], ["213", "T3-1804", 18, 652, 66, 52, "side"], ["214", "T3-1805", 18, 712, 66, 52, "side"], ["219", "T3-502", 465.0, 300, 56, 86, "top"], ["220", "T3-503", 522.5, 300, 56, 86, "top"], ["221", "T3-TS06", 580.0, 300, 56, 86, "top"], ["222", "T3-504", 637.5, 300, 56, 86, "top"], ["223", "T3-TS05", 695.0, 300, 56, 86, "top"], ["224", "T3-505", 752.5, 300, 56, 86, "top"], ["225", "T3-506", 810.0, 300, 56, 86, "top"], ["227", "T3-TS04", 700, 478, 80, 56, "side"], ["228", "T3-TS03", 700, 542, 80, 56, "side"], ["229", "T3-TS02", 700, 606, 80, 56, "side"], ["230", "T3-TS01", 700, 670, 80, 56, "side"], ["231", "T3-605", 742.0, 718, 56, 84, "top"], ["232", "T3-604", 799.5, 718, 56, 84, "top"], ["233", "T3-603", 857.0, 718, 56, 84, "top"], ["234", "T3-H207", 914.5, 718, 56, 84, "top"], ["235", "T3-601", 972.0, 718, 56, 84, "top"], ["216", "T3-H409", 212, 518, 80, 48, "left"], ["215", "T3-1806", 258, 566, 80, 48, "left"], ["217", "T3-H408", 318, 352, 56, 98, "a1"], ["218", "T3H407", 382, 330, 56, 98, "a1"], ["226", "T3-501", 762, 398, 56, 92, "a3"], ["HC", "", 268, 368, 58, 96, "a1"]]}, "t3-3f": {"name": "Tower 3 \u00b7 3rd Floor", "tower": "t3", "node": "t3-3f/spots", "ls": "t3-3f-state", "view": "0 0 1240 880", "deco": "<rect class=\"zone static\" x=\"2\" y=\"58\" width=\"1236\" height=\"800\" rx=\"22\"/><defs><pattern id=\"hzT33\" width=\"16\" height=\"26\" patternUnits=\"userSpaceOnUse\"><rect width=\"16\" height=\"26\" fill=\"#f7c948\"/><rect width=\"8\" height=\"26\" fill=\"#141414\"/></pattern></defs><rect x=\"405\" y=\"212\" width=\"380\" height=\"26\" fill=\"url(#hzT33)\"/><text x=\"595\" y=\"262\" text-anchor=\"middle\" font-size=\"21\" font-weight=\"800\" fill=\"#e5484d\" letter-spacing=\"1\">VALET PLEASE DRIVE SLOW 5mph</text><g class=\"static\" transform=\"rotate(28 440 498)\"><rect x=\"400\" y=\"470\" width=\"80\" height=\"56\" fill=\"#1c2434\"/><text x=\"440\" y=\"494\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#aebadd\">Elev</text><text x=\"440\" y=\"516\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"800\" fill=\"#aebadd\">T3</text></g><text class=\"static\" x=\"1085\" y=\"622\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"800\" fill=\"#d7e0f2\">3rd Floor</text><text class=\"static\" x=\"1085\" y=\"656\" text-anchor=\"middle\" font-size=\"30\" font-weight=\"800\" fill=\"#d7e0f2\">Tower 3</text>", "seed": {"38": "avail", "42": "avail", "49": "avail", "75": "avail", "81": "avail", "82": "avail", "83": "avail", "93": "avail", "94": "avail", "HC": "avail"}, "spots": [["59", "T3-1603", 128.0, 105, 48, 95, "top"], ["58", "T3-1602", 178.5, 105, 48, 95, "top"], ["57", "T3-1601", 229.0, 105, 48, 95, "top"], ["56", "T3-1206", 279.5, 105, 48, 95, "top"], ["55", "T3-1205", 330.0, 105, 48, 95, "top"], ["54", "T3-1204", 380.5, 105, 48, 95, "top"], ["53", "Valet", 431.0, 105, 48, 95, "top"], ["52", "T3-1202", 481.5, 105, 48, 95, "top"], ["51", "T3-1201", 532.0, 105, 48, 95, "top"], ["50", "T3-PH02", 582.5, 105, 48, 95, "top"], ["49", "T3-1105", 633.0, 105, 48, 95, "top"], ["48", "T3-1104", 683.5, 105, 48, 95, "top"], ["47", "T3-1103", 734.0, 105, 48, 95, "top"], ["46", "T3-1102", 784.5, 105, 48, 95, "top"], ["45", "T3-1101", 835.0, 105, 48, 95, "top"], ["44", "T3-1106", 885.5, 105, 48, 95, "top"], ["43", "T3-705", 936.0, 105, 48, 95, "top"], ["42", "T3-704", 986.5, 105, 48, 95, "top"], ["41", "T3-703", 1037.0, 105, 48, 95, "top"], ["40", "T3-702", 1087.5, 105, 48, 95, "top"], ["39", "T3-701", 1138.0, 105, 48, 95, "top"], ["38", "T3-706", 1188.5, 105, 48, 95, "top"], ["60", "T3-1604", 45, 225, 60, 47, "side"], ["61", "T3-1605", 45, 282, 60, 47, "side"], ["62", "T3-1606", 45, 339, 60, 47, "side"], ["63", "T3-1701", 45, 396, 60, 47, "side"], ["64", "T3-1702", 45, 453, 60, 47, "side"], ["65", "T3-1703", 45, 510, 60, 47, "side"], ["66", "T3-1704", 45, 567, 60, 47, "side"], ["67", "T3-1705", 45, 624, 60, 47, "side"], ["68", "T3-1706", 45, 681, 60, 47, "side"], ["73", "T3-H309", 440.0, 330, 56, 86, "top"], ["74", "T3-PH03", 497.5, 330, 56, 86, "top"], ["75", "T3-1203T", 555.0, 330, 56, 86, "top"], ["76", "T3-PH04", 612.5, 330, 56, 86, "top"], ["77", "", 670.0, 330, 56, 108, "top"], ["78", "T3-PH05", 727.5, 330, 56, 86, "top"], ["79", "T3-PH06", 785.0, 330, 56, 86, "top"], ["95", "T3-801", 1015, 320, 65, 47, "side"], ["94", "T3-802", 1015, 377, 65, 47, "side"], ["93", "T3-803", 1015, 434, 65, 47, "side"], ["92", "T3-804", 1015, 491, 65, 47, "side"], ["91", "T3-805", 1015, 548, 65, 47, "side"], ["90", "T3-806", 1015, 605, 65, 47, "side"], ["70", "T3-602", 218, 545, 75, 45, "left"], ["69", "T3-H308", 218, 620, 75, 45, "left"], ["71", "T3-H307", 300, 390, 56, 98, "a1"], ["72", "T3-H208", 365, 368, 56, 98, "a1"], ["80", "T3-PH01", 655, 470, 92, 46, "a4"], ["81", "Valet", 672, 520, 90, 38, "side"], ["82", "Valet", 672, 570, 90, 38, "side"], ["83", "Valet", 672, 620, 90, 38, "side"], ["HC", "", 252, 418, 58, 96, "a1"]]}, "t12-3f": {"name": "Tower 1 & 2 \u00b7 3rd Floor", "tower": "t12", "node": "t12-3f/spots", "ls": "t12-3f-state", "view": "0 0 1600 660", "deco": "<rect class=\"zone static\" x=\"20\" y=\"16\" width=\"1560\" height=\"180\" rx=\"18\"/><rect class=\"zone static\" x=\"20\" y=\"216\" width=\"440\" height=\"404\" rx=\"18\"/><text class=\"zonecap static\" x=\"38\" y=\"242\">WEST \u00b7 ELEV T2</text><rect class=\"zone static\" x=\"480\" y=\"216\" width=\"650\" height=\"404\" rx=\"18\"/><text class=\"zonecap static\" x=\"498\" y=\"242\">CENTER \u00b7 RAMPS</text><rect class=\"zone static\" x=\"1150\" y=\"216\" width=\"430\" height=\"404\" rx=\"18\"/><text class=\"zonecap static\" x=\"1168\" y=\"242\">EAST \u00b7 ELEV T1</text><text class=\"zonecap static\" x=\"1466\" y=\"42\" text-anchor=\"middle\">TOP ROW</text><g class=\"static\"><rect x=\"40\" y=\"40\" width=\"250\" height=\"78\" fill=\"#0f5132\"/><text x=\"165\" y=\"74\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"800\" fill=\"#7bf1a8\">3-WINDOW</text><text x=\"165\" y=\"98\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"700\" fill=\"#7bf1a8\">SMALL CARS</text></g><defs><pattern id=\"hz330\" width=\"16\" height=\"26\" patternUnits=\"userSpaceOnUse\"><rect width=\"16\" height=\"26\" fill=\"#f7c948\"/><rect width=\"8\" height=\"26\" fill=\"#141414\"/></pattern></defs><rect x=\"330\" y=\"140\" width=\"1024\" height=\"15\" fill=\"url(#hz330)\"/><text x=\"842\" y=\"182\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"800\" fill=\"#e5484d\" letter-spacing=\"1\">VALET PLEASE DRIVE SLOW 5mph</text><g class=\"static\"><circle cx=\"640\" cy=\"430\" r=\"86\" fill=\"none\" stroke=\"#2a3348\" stroke-width=\"34\"/><text x=\"640\" y=\"392\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\" fill=\"#aebadd\">Ramp</text><text x=\"640\" y=\"488\" text-anchor=\"middle\" font-size=\"26\" fill=\"#aebadd\">\u2193</text><text x=\"640\" y=\"522\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"800\" fill=\"#d8bc7a\">DRIVE SLOW</text></g><g class=\"static\"><circle cx=\"1055\" cy=\"420\" r=\"86\" fill=\"none\" stroke=\"#2a3348\" stroke-width=\"34\"/><text x=\"1055\" y=\"382\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\" fill=\"#aebadd\">Ramp</text><text x=\"1055\" y=\"478\" text-anchor=\"middle\" font-size=\"26\" fill=\"#aebadd\">\u2191</text><text x=\"1055\" y=\"512\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"800\" fill=\"#d8bc7a\">DRIVE SLOW</text></g><g class=\"static\"><rect x=\"945\" y=\"345\" width=\"72\" height=\"52\" fill=\"#1c2434\"/><text x=\"981\" y=\"367\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\" fill=\"#aebadd\">Elev</text><text x=\"981\" y=\"387\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"800\" fill=\"#aebadd\">Valet</text></g><g class=\"static\" transform=\"rotate(-28 408 348)\"><rect x=\"368\" y=\"320\" width=\"80\" height=\"56\" fill=\"#1c2434\"/><text x=\"408\" y=\"344\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#aebadd\">Elev</text><text x=\"408\" y=\"366\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"800\" fill=\"#aebadd\">T2</text></g><g class=\"static\"><rect x=\"790\" y=\"500\" width=\"120\" height=\"32\" fill=\"#0f5132\"/><text x=\"850\" y=\"521\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"800\" fill=\"#7bf1a8\">3-RAMP</text></g><text class=\"unit static\" x=\"255\" y=\"468\" font-size=\"12.5\">3-WALL \u00b7 2 CARS</text><text class=\"unit static\" x=\"255\" y=\"540\" font-size=\"12.5\">3-WALL \u00b7 1 BIG CAR</text><g class=\"static\" transform=\"rotate(-28 1240 498)\"><rect x=\"1200\" y=\"470\" width=\"80\" height=\"56\" fill=\"#1c2434\"/><text x=\"1240\" y=\"494\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#aebadd\">Elev</text><text x=\"1240\" y=\"516\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"800\" fill=\"#aebadd\">T1</text></g><ellipse class=\"static\" cx=\"1427\" cy=\"418\" rx=\"26\" ry=\"15\" fill=\"#e5484d\"/>", "seed": {}, "spots": [["36", "", 330, 48, 36, 72, "top"], ["35", "", 368, 48, 36, 72, "top"], ["34", "", 406, 48, 36, 72, "top"], ["33", "", 444, 48, 36, 72, "top"], ["32", "", 482, 48, 36, 72, "top"], ["31", "", 520, 48, 36, 72, "top"], ["30", "", 558, 48, 36, 72, "top"], ["29", "", 596, 48, 36, 72, "top"], ["28", "", 634, 48, 36, 72, "top"], ["27", "", 672, 48, 36, 72, "top"], ["26", "", 710, 48, 36, 72, "top"], ["25", "", 748, 48, 36, 72, "top"], ["24", "", 786, 48, 36, 72, "top"], ["23", "", 824, 48, 36, 72, "top"], ["22", "", 862, 48, 36, 72, "top"], ["21", "", 900, 48, 36, 72, "top"], ["20", "", 938, 48, 36, 72, "top"], ["19", "", 976, 48, 36, 72, "top"], ["18", "", 1014, 48, 36, 72, "top"], ["17", "", 1052, 48, 36, 72, "top"], ["16", "", 1090, 48, 36, 72, "top"], ["15", "", 1128, 48, 36, 72, "top"], ["14", "", 1166, 48, 36, 72, "top"], ["13", "", 1204, 48, 36, 72, "top"], ["12", "", 1242, 48, 36, 72, "top"], ["11", "", 1280, 48, 36, 72, "top"], ["10", "", 1318, 48, 36, 72, "top"], ["96", "", 60, 250, 58, 36, "side"], ["97", "", 60, 292, 58, 36, "side"], ["98", "", 60, 334, 58, 36, "side"], ["99", "", 60, 376, 58, 36, "side"], ["100", "", 60, 418, 58, 36, "side"], ["101", "", 60, 460, 58, 36, "side"], ["108", "", 150, 250, 58, 36, "side"], ["107", "", 150, 292, 58, 36, "side"], ["106", "", 150, 334, 58, 36, "side"], ["105", "", 150, 376, 88, 36, "side"], ["104", "", 150, 418, 58, 36, "side"], ["103", "", 150, 476, 58, 36, "side"], ["102", "", 150, 518, 58, 36, "side"], ["109", "", 260, 250, 42, 58, "top"], ["110", "", 312, 240, 36, 84, "top"], ["84", "", 60, 540, 66, 36, "side"], ["85", "", 150, 556, 37, 58, "top"], ["86", "", 189, 556, 37, 58, "top"], ["87", "", 228, 556, 37, 58, "top"], ["88", "", 267, 556, 37, 58, "top"], ["89", "", 306, 556, 37, 58, "top"], ["111", "", 500, 250, 37, 58, "top"], ["112", "", 539, 250, 37, 58, "top"], ["113", "", 578, 250, 37, 58, "top"], ["114", "", 617, 250, 37, 58, "top"], ["115", "", 656, 250, 37, 58, "top"], ["116", "", 695, 250, 37, 58, "top"], ["117", "", 734, 250, 37, 58, "top"], ["118", "", 790, 250, 38, 84, "top"], ["119", "", 832, 250, 32, 60, "top"], ["120", "", 868, 250, 38, 84, "top"], ["140", "", 790, 360, 54, 38, "side"], ["139", "", 790, 404, 54, 38, "side"], ["138", "", 790, 448, 54, 38, "side"], ["141", "", 856, 360, 54, 38, "side"], ["142", "", 856, 404, 54, 38, "side"], ["143", "", 856, 448, 54, 38, "side"], ["137", "", 790, 556, 43, 54, "top"], ["136", "", 837, 556, 43, 54, "top"], ["135", "", 884, 556, 43, 54, "top"], ["134", "", 960, 556, 43, 54, "top"], ["133", "", 1007, 556, 43, 54, "top"], ["132", "", 1054, 556, 43, 54, "top"], ["121", "", 1165, 250, 37, 58, "top"], ["122", "", 1204, 250, 37, 58, "top"], ["123", "", 1243, 250, 37, 58, "top"], ["124", "", 1282, 250, 37, 58, "top"], ["125", "", 1321, 250, 37, 58, "top"], ["126", "", 1360, 250, 37, 58, "top"], ["127", "", 1399, 250, 37, 58, "top"], ["128", "", 1230, 350, 37, 64, "a3"], ["129", "", 1272, 368, 37, 64, "a3"], ["HC", "", 1314, 386, 37, 64, "a3"], ["130", "", 1400, 450, 54, 36, "side"], ["131", "", 1400, 520, 54, 36, "side"], ["9", "", 1510, 250, 54, 34, "side"], ["8", "", 1510, 290, 54, 34, "side"], ["7", "", 1510, 330, 54, 34, "side"], ["6", "", 1510, 370, 54, 34, "side"], ["5", "", 1510, 410, 54, 34, "side"], ["4", "", 1510, 450, 54, 34, "side"], ["3", "", 1510, 490, 54, 34, "side"], ["2", "", 1510, 530, 54, 34, "side"], ["1", "", 1510, 570, 54, 34, "side"]]}, "t12-4f": {"name": "Tower 1 & 2 \u00b7 4th Floor", "tower": "t12", "node": "t12-4f/spots", "ls": "t12-4f-state", "view": "0 0 1600 660", "deco": "<rect class=\"zone static\" x=\"20\" y=\"16\" width=\"1560\" height=\"180\" rx=\"18\"/><rect class=\"zone static\" x=\"20\" y=\"216\" width=\"440\" height=\"404\" rx=\"18\"/><text class=\"zonecap static\" x=\"38\" y=\"242\">WEST \u00b7 ELEV T2</text><rect class=\"zone static\" x=\"480\" y=\"216\" width=\"650\" height=\"404\" rx=\"18\"/><text class=\"zonecap static\" x=\"498\" y=\"242\">CENTER \u00b7 RAMPS</text><rect class=\"zone static\" x=\"1150\" y=\"216\" width=\"430\" height=\"404\" rx=\"18\"/><text class=\"zonecap static\" x=\"1168\" y=\"242\">EAST \u00b7 ELEV T1</text><g class=\"static\"><rect x=\"190\" y=\"40\" width=\"250\" height=\"78\" fill=\"#0f5132\"/><text x=\"315\" y=\"74\" text-anchor=\"middle\" font-size=\"24\" font-weight=\"800\" fill=\"#7bf1a8\">4-WINDOW</text><text x=\"315\" y=\"98\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"700\" fill=\"#7bf1a8\">ONLY SMALL CARS</text></g><defs><pattern id=\"hz460\" width=\"16\" height=\"26\" patternUnits=\"userSpaceOnUse\"><rect width=\"16\" height=\"26\" fill=\"#f7c948\"/><rect width=\"8\" height=\"26\" fill=\"#141414\"/></pattern></defs><rect x=\"460\" y=\"140\" width=\"1078\" height=\"15\" fill=\"url(#hz460)\"/><text x=\"1000\" y=\"182\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"800\" fill=\"#e5484d\" letter-spacing=\"1\">VALET PLEASE DRIVE SLOW 5mph</text><g class=\"static\"><circle cx=\"620\" cy=\"450\" r=\"86\" fill=\"none\" stroke=\"#2a3348\" stroke-width=\"34\"/><text x=\"620\" y=\"412\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\" fill=\"#aebadd\">Ramp</text><text x=\"620\" y=\"508\" text-anchor=\"middle\" font-size=\"26\" fill=\"#aebadd\">\u2193</text><text x=\"620\" y=\"542\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"800\" fill=\"#d8bc7a\">DRIVE SLOW</text></g><g class=\"static\"><circle cx=\"1060\" cy=\"450\" r=\"86\" fill=\"none\" stroke=\"#2a3348\" stroke-width=\"34\"/><text x=\"1060\" y=\"412\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"700\" fill=\"#aebadd\">Ramp</text><text x=\"1060\" y=\"508\" text-anchor=\"middle\" font-size=\"26\" fill=\"#aebadd\">\u2191</text><text x=\"1060\" y=\"542\" text-anchor=\"middle\" font-size=\"13\" font-weight=\"800\" fill=\"#d8bc7a\">DRIVE SLOW</text></g><g class=\"static\"><rect x=\"1000\" y=\"300\" width=\"72\" height=\"52\" fill=\"#1c2434\"/><text x=\"1036\" y=\"322\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\" fill=\"#aebadd\">Elev</text><text x=\"1036\" y=\"342\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"800\" fill=\"#aebadd\">Valet</text></g><g class=\"static\" transform=\"rotate(-28 378 426)\"><rect x=\"338\" y=\"398\" width=\"80\" height=\"56\" fill=\"#1c2434\"/><text x=\"378\" y=\"422\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#aebadd\">Elev</text><text x=\"378\" y=\"444\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"800\" fill=\"#aebadd\">T2</text></g><g class=\"static\"><rect x=\"40\" y=\"510\" width=\"140\" height=\"30\" fill=\"#e5484d\"/><text x=\"110\" y=\"529\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"800\" fill=\"#fff\">BIKES \u00b7 NO PARKING</text></g><g class=\"static\"><rect x=\"215\" y=\"575\" width=\"120\" height=\"26\" fill=\"#e5484d\"/><text x=\"275\" y=\"592\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"800\" fill=\"#fff\">NO PARKING</text></g><g class=\"static\"><rect x=\"742\" y=\"354\" width=\"40\" height=\"96\" fill=\"#0f5132\"/><text x=\"762\" y=\"402\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"800\" fill=\"#7bf1a8\" transform=\"rotate(-90 762 402)\">BREAKROOM</text></g><g class=\"static\"><rect x=\"875\" y=\"356\" width=\"130\" height=\"24\" fill=\"#0f5132\"/><text x=\"940\" y=\"371\" text-anchor=\"middle\" font-size=\"11\" font-weight=\"800\" fill=\"#7bf1a8\">4-ELEV \u00b7 SMALL CARS</text></g><g class=\"static\"><rect x=\"880\" y=\"522\" width=\"120\" height=\"30\" fill=\"#0f5132\"/><text x=\"940\" y=\"542\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"800\" fill=\"#7bf1a8\">4-RAMP</text></g><g class=\"static\" transform=\"rotate(-28 1240 498)\"><rect x=\"1200\" y=\"470\" width=\"80\" height=\"56\" fill=\"#1c2434\"/><text x=\"1240\" y=\"494\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"#aebadd\">Elev</text><text x=\"1240\" y=\"516\" text-anchor=\"middle\" font-size=\"17\" font-weight=\"800\" fill=\"#aebadd\">T1</text></g><ellipse class=\"static\" cx=\"1427\" cy=\"418\" rx=\"26\" ry=\"15\" fill=\"#e5484d\"/>", "seed": {}, "spots": [["185", "", 50, 48, 37, 60, "top"], ["184", "", 89, 48, 37, 60, "top"], ["183", "", 128, 48, 37, 60, "top"], ["182", "", 460, 48, 34, 66, "top"], ["181", "", 496, 48, 34, 66, "top"], ["180", "", 532, 48, 34, 66, "top"], ["179", "", 568, 48, 34, 66, "top"], ["178", "", 604, 48, 34, 66, "top"], ["177", "", 640, 48, 34, 66, "top"], ["176", "", 676, 48, 34, 66, "top"], ["175", "", 712, 48, 34, 66, "top"], ["174", "", 748, 48, 34, 66, "top"], ["173", "", 784, 48, 34, 66, "top"], ["172", "", 820, 48, 34, 66, "top"], ["171", "", 856, 48, 34, 66, "top"], ["170", "", 892, 48, 34, 66, "top"], ["169", "", 928, 48, 34, 66, "top"], ["168", "", 964, 48, 34, 66, "top"], ["167", "", 1000, 48, 34, 66, "top"], ["166", "", 1036, 48, 34, 66, "top"], ["165", "", 1072, 48, 34, 66, "top"], ["164", "", 1108, 48, 34, 66, "top"], ["163", "", 1144, 48, 34, 66, "top"], ["162", "", 1180, 48, 34, 66, "top"], ["161", "", 1216, 48, 34, 66, "top"], ["160", "", 1252, 48, 34, 66, "top"], ["159", "", 1288, 48, 34, 66, "top"], ["158", "", 1324, 48, 34, 66, "top"], ["157", "", 1360, 48, 34, 66, "top"], ["156", "", 1396, 48, 34, 66, "top"], ["155", "", 1432, 48, 34, 66, "top"], ["154", "", 1468, 48, 34, 66, "top"], ["153", "", 1504, 48, 34, 66, "top"], ["241", "", 45, 250, 54, 36, "side"], ["240", "", 45, 292, 54, 36, "side"], ["239", "", 45, 334, 54, 36, "side"], ["238", "", 45, 376, 54, 36, "side"], ["237", "", 45, 418, 54, 36, "side"], ["236", "", 45, 460, 54, 36, "side"], ["242", "", 120, 250, 54, 36, "side"], ["243", "", 120, 292, 54, 36, "side"], ["244", "", 120, 334, 54, 36, "side"], ["245", "", 120, 376, 54, 36, "side"], ["246", "", 120, 418, 54, 36, "side"], ["247", "", 120, 460, 54, 36, "side"], ["254", "", 215, 250, 54, 36, "side"], ["253", "", 215, 292, 54, 36, "side"], ["252", "", 215, 334, 54, 36, "side"], ["251", "", 215, 386, 98, 36, "side"], ["250", "", 215, 428, 54, 36, "side"], ["249", "", 215, 486, 54, 36, "side"], ["248", "", 215, 528, 54, 36, "side"], ["255", "", 330, 240, 42, 58, "top"], ["256", "", 382, 230, 36, 96, "top"], ["257", "", 500, 250, 37, 58, "top"], ["258", "", 539, 250, 37, 58, "top"], ["259", "", 578, 250, 37, 58, "top"], ["260", "", 617, 250, 37, 58, "top"], ["261", "", 656, 250, 37, 58, "top"], ["262", "", 695, 250, 37, 58, "top"], ["263", "", 742, 250, 40, 96, "top"], ["264", "", 788, 250, 40, 58, "top"], ["265", "", 880, 250, 40, 96, "top"], ["266", "", 924, 250, 32, 60, "top"], ["267", "", 960, 250, 40, 96, "top"], ["268", "", 1165, 250, 37, 84, "top"], ["269", "", 1204, 250, 37, 84, "top"], ["270", "", 1243, 250, 37, 58, "top"], ["271", "", 1282, 250, 37, 58, "top"], ["272", "", 1321, 250, 37, 58, "top"], ["273", "", 1360, 250, 37, 58, "top"], ["274", "", 1399, 250, 37, 58, "top"], ["275", "", 1438, 250, 37, 58, "top"], ["288", "", 880, 392, 54, 36, "side"], ["287", "", 880, 434, 54, 36, "side"], ["286", "", 880, 476, 54, 36, "side"], ["291", "", 946, 392, 54, 36, "side"], ["290", "", 946, 434, 54, 36, "side"], ["289", "", 946, 476, 54, 36, "side"], ["285", "", 860, 566, 40, 48, "top"], ["284", "", 904, 566, 40, 48, "top"], ["283", "", 948, 566, 40, 48, "top"], ["282", "", 1000, 566, 40, 48, "top"], ["281", "", 1044, 566, 40, 48, "top"], ["280", "", 1088, 566, 40, 48, "top"], ["276", "", 1230, 350, 37, 64, "a3"], ["277", "", 1272, 368, 37, 64, "a3"], ["HC", "", 1314, 386, 37, 64, "a3"], ["278", "", 1400, 450, 54, 36, "side"], ["279", "", 1400, 520, 54, 36, "side"], ["152", "", 1510, 250, 54, 34, "side"], ["151", "", 1510, 290, 54, 34, "side"], ["150", "", 1510, 330, 54, 34, "side"], ["149", "", 1510, 370, 54, 34, "side"], ["148", "", 1510, 410, 54, 34, "side"], ["147", "", 1510, 450, 54, 34, "side"], ["146", "", 1510, 490, 54, 34, "side"], ["145", "", 1510, 530, 54, 34, "side"], ["144", "", 1510, 570, 54, 34, "side"]]}};
 let tower="t3", floor="4f";
 const F={};
@@ -196,6 +294,8 @@ Object.entries(FLOORS).forEach(([key,fl])=>{
   const g=svg.querySelector('.spots');
   const els={};
   fl.spots.forEach(([id,label,x,y,w,h,mode])=>{
+    const permUnit = PERM[(key.includes('3f')?'3':'4')+'-'+id];
+    if(!label && permUnit) label='UNIT '+permUnit;
     const grp=document.createElementNS(NS,'g');
     grp.setAttribute('class','stall'); grp.dataset.spot=id;
     let tr='';
@@ -214,7 +314,7 @@ Object.entries(FLOORS).forEach(([key,fl])=>{
     grp.appendChild(t); g.appendChild(grp);
     if(label){
       const u=document.createElementNS(NS,'text');
-      u.setAttribute('class','unit static');
+      u.setAttribute('class','unit static'+(label.startsWith('UNIT ')?' perm':''));
       if(mode==='side'){ u.setAttribute('x',x+w+8); u.setAttribute('y',y+h/2+4); }
       else if(mode==='left'){ u.setAttribute('x',x-8); u.setAttribute('y',y+h/2+4); u.setAttribute('text-anchor','end'); }
       else if(mode==='a1'){ u.setAttribute('x',x+w/2); u.setAttribute('y',y-10); u.setAttribute('text-anchor','middle'); u.setAttribute('transform',`rotate(-32 ${x+w/2} ${y-10})`); }
@@ -293,13 +393,17 @@ function attachZoom(vp,zm,badge){
 }
 function counts(o){ let a=0,t=0; Object.values(o.state).forEach(v=>{ if(v==='avail')a++; else if(v==='taken')t++; }); return [a,t]; }
 function paint(key){
-  const o=F[key];
+  const o=F[key]; const cars=o.cars||{};
   Object.keys(o.els).forEach(k=>{
-    const v=o.state[k];
-    o.els[k].classList.toggle('avail',v==='avail');
+    const hasCar=!!cars[k];
+    const v=hasCar ? 'taken' : o.state[k];
+    o.els[k].classList.toggle('avail',!hasCar && v==='avail');
     o.els[k].classList.toggle('taken',v==='taken');
+    o.els[k].classList.toggle('hascar',hasCar);
+    o.els[k].classList.toggle('keyx',!!(cars[k] && cars[k].keyMissing));
   });
-  const [a,t]=counts(o);
+  let a=0,t=0;
+  Object.keys(o.els).forEach(k=>{ if(cars[k]) t++; else if(o.state[k]==='avail') a++; else if(o.state[k]==='taken') t++; });
   const fnum = key.endsWith('3f') ? '3' : '4';
   if(FLOORS[key].tower===tower) document.getElementById('cnt'+fnum).textContent=a;
   if(key===tower+'-'+floor){
@@ -315,7 +419,9 @@ function setStat(id,barId,val,total){
 }
 function cycle(key,id){
   if(Date.now()<__suppressClick) return;
-  const o=F[key]; const cur=o.state[id];
+  const o=F[key];
+  if(o.cars && o.cars[id]){ openCar(key,id); return; }
+  const cur=o.state[id];
   const el=o.els[id]; if(el){ el.classList.remove('pulse'); void el.getBoundingClientRect(); el.classList.add('pulse'); }
   if(navigator.vibrate) navigator.vibrate(8);
   const nxt= cur==='avail' ? 'taken' : cur==='taken' ? null : 'avail';
@@ -347,6 +453,184 @@ document.getElementById('resetBtn').addEventListener('click',()=>{
 });
 Object.keys(F).forEach(k=>paint(k));
 show();
+
+let HIST={}, view='map', sheetCtx=null, editCtx=null, afFloor=4, scanStream=null;
+function floorOf(key){ return key.includes('3f') ? '3' : '4'; }
+function spotLabel(key,spot,c){ return floorOf(key)+'/'+spot+((c&&c.pos)||''); }
+function fmtEl(ms){ const m=Math.max(0,Math.floor(ms/60000)); const d=Math.floor(m/1440), h=Math.floor(m%1440/60), mm=m%60;
+  if(d>0) return d+'d '+String(h).padStart(2,'0')+'h'; if(h>0) return h+'h '+String(mm).padStart(2,'0')+'m'; return mm+'m'; }
+function amountDue(c){ const h=(Date.now()-c.in)/3600000;
+  if(c.tier==='validation') return 8*Math.max(1,Math.ceil(h/12));
+  if(c.tier==='commercial') return 20*Math.max(1,Math.ceil(h/12));
+  if(c.tier==='weekly') return 100*Math.max(1,Math.ceil(h/168));
+  return h<=12 ? 10 : 20*Math.ceil(h/24); }
+function allCars(){ const out=[]; Object.entries(F).forEach(([key,o])=>{ Object.entries(o.cars||{}).forEach(([spot,c])=>out.push({key,spot,c})); }); return out; }
+function renderCars(){
+  const cars=allCars();
+  document.getElementById('carCount').textContent=cars.length;
+  const dayStart=new Date(); dayStart.setHours(0,0,0,0); const t0=dayStart.getTime();
+  const histToday=Object.values(HIST).filter(x=>x.out>=t0);
+  const inToday=cars.filter(x=>x.c.in>=t0).length + histToday.length;
+  let rev=histToday.reduce((s,x)=>s+(x.paid? (x.amount||0):0),0);
+  cars.forEach(x=>{ if(x.c.paid) rev+=amountDue(x.c); });
+  document.getElementById('cvNow').textContent=cars.length;
+  document.getElementById('cvIn').textContent=inToday;
+  document.getElementById('cvOut').textContent=histToday.length;
+  document.getElementById('cvRev').textContent='$'+rev;
+  const q=(document.getElementById('carSearch').value||'').toLowerCase().trim();
+  const grid=document.getElementById('carGrid'); grid.innerHTML='';
+  const sorted=cars.slice().sort((a,b)=>a.c.in-b.c.in);
+  let shown=0;
+  sorted.forEach(({key,spot,c})=>{
+    const hay=(c.ticket+' '+spotLabel(key,spot,c)+' '+(c.name||'')+' '+(c.plate||'')+' '+(c.unit||'')+' '+(c.make||'')).toLowerCase();
+    if(q && !hay.includes(q)) return;
+    shown++;
+    const card=document.createElement('div'); card.className='carcard';
+    const due=amountDue(c);
+    card.innerHTML='<div class="tk">'+c.ticket+'</div><span class="spot">'+spotLabel(key,spot,c)+'</span>'
+      +'<div class="el">'+fmtEl(Date.now()-c.in)+'</div>'
+      +'<div class="meta">'+((c.color||'')+' '+(c.make||'')).trim()+(c.plate? '<br>'+c.plate : '')+(c.name? '<br>'+c.name : '')+'</div>'
+      +(c.paid? '<span class="bdg paid">Paid</span>' : '<span class="bdg due">Due $'+due+'</span>')
+      +(c.keyMissing? '<span class="bdg key">Key missing</span>' : '');
+    card.addEventListener('click',()=>openCar(key,spot));
+    grid.appendChild(card);
+  });
+  document.getElementById('carsEmpty').style.display = cars.length? (shown? 'none':'block') : 'block';
+  if(cars.length && !shown) document.getElementById('carsEmpty').textContent='No cars match that search.';
+  if(!cars.length) document.getElementById('carsEmpty').textContent='No cars parked right now. Tap + Arrival to park the first one.';
+}
+function openSheet(id){ document.getElementById('scrim').classList.add('on'); document.getElementById(id).classList.add('on'); }
+function closeSheets(){ document.getElementById('scrim').classList.remove('on');
+  document.querySelectorAll('.sheet').forEach(s=>s.classList.remove('on')); sheetCtx=null; editCtx=null; stopScan(); }
+document.getElementById('scrim').addEventListener('click',closeSheets);
+function row(k,v){ return '<div class="srow"><span>'+k+'</span><b>'+(v||'—')+'</b></div>'; }
+function openCar(key,spot){
+  const c=(F[key].cars||{})[spot]; if(!c) return;
+  sheetCtx={key,spot};
+  const due=amountDue(c);
+  const when=new Date(c.in);
+  document.getElementById('carSheet').innerHTML=
+    '<div class="sheetttl">Ticket '+c.ticket+'<span class="sub">Spot '+spotLabel(key,spot,c)+' · '+F[key].fl.name+'</span></div>'
+    + row('Parked for', fmtEl(Date.now()-c.in))
+    + row('Check-in', when.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))
+    + row('Guest', c.name) + row('Phone', c.phone) + row('Visiting unit', c.unit)
+    + row('Car', ((c.color||'')+' '+(c.make||'')).trim()) + row('Plate', c.plate)
+    + row('Pricing', c.tier ? c.tier[0].toUpperCase()+c.tier.slice(1) : 'Resident')
+    + row('Parked by', c.driver)
+    + row('Amount', c.paid? 'PAID' : 'Due $'+due)
+    + (c.keyMissing? row('Key', '⚠ MISSING') : '')
+    + '<div class="actions">'
+    + (c.phone? '<button class="abtn" id="csText">Text guest</button>' : '')
+    + '<button class="abtn" id="csPaid">'+(c.paid? 'Mark unpaid' : 'Mark as paid')+'</button>'
+    + '<button class="abtn" id="csKey">'+(c.keyMissing? 'Key found' : 'Key missing')+'</button>'
+    + '<button class="abtn" id="csEdit">Edit</button>'
+    + '<button class="abtn gold" id="csOut" style="grid-column:1/-1">Checkout — car leaves</button>'
+    + '</div>';
+  openSheet('carSheet');
+  const q=s=>document.getElementById(s);
+  if(c.phone) q('csText').addEventListener('click',()=>{ location.href='sms:'+c.phone.replace(/[^0-9+]/g,''); });
+  q('csPaid').addEventListener('click',()=>{ setCarField(key,spot,'paid',!c.paid); });
+  q('csKey').addEventListener('click',()=>{ setCarField(key,spot,'keyMissing',!c.keyMissing); });
+  q('csEdit').addEventListener('click',()=>{ closeSheets(); openArrival({key,spot}); });
+  q('csOut').addEventListener('click',()=>{ checkoutCar(key,spot); });
+}
+function setCarField(key,spot,field,val){
+  const o=F[key]; if(!o.carsRef) return;
+  o.carsRef.child(spot).child(field).set(val);
+  if(o.cars && o.cars[spot]) o.cars[spot][field]=val;
+  paint(key); renderCars(); if(sheetCtx) openCar(key,spot);
+}
+function checkoutCar(key,spot){
+  const o=F[key]; const c=(o.cars||{})[spot]; if(!c) return;
+  if(!confirm('Check out ticket '+c.ticket+' from spot '+spotLabel(key,spot,c)+'?')) return;
+  const rec={ticket:c.ticket, spot:spotLabel(key,spot,c), in:c.in, out:Date.now(), amount:amountDue(c), paid:!!c.paid, tier:c.tier||'resident'};
+  if(o.histRef) o.histRef.push(rec);
+  if(o.carsRef) o.carsRef.child(spot).remove();
+  if(o.cars) delete o.cars[spot];
+  if(o.state && o.state[spot]){ delete o.state[spot]; if(o.ref) o.ref.child(spot).remove(); }
+  closeSheets(); paint(key); renderCars();
+}
+function findFloorKey(floorNum,spot){
+  return Object.keys(FLOORS).find(k=>floorOf(k)===String(floorNum) && F[k].els[spot]);
+}
+function openArrival(edit){
+  stopScan();
+  const q=s=>document.getElementById(s);
+  if(edit){
+    editCtx=edit; const c=F[edit.key].cars[edit.spot];
+    afFloor=parseInt(floorOf(edit.key));
+    q('afTitle').textContent='Edit ticket '+c.ticket;
+    q('afTicket').value=c.ticket||''; q('afSpot').value=edit.spot; q('afPos').value=c.pos||'';
+    q('afTier').value=c.tier||'resident'; q('afName').value=c.name||''; q('afPhone').value=c.phone||'';
+    q('afUnit').value=c.unit||''; q('afPlate').value=c.plate||''; q('afMake').value=c.make||'';
+    q('afColor').value=c.color||''; q('afDriver').value=c.driver||'';
+    q('afSave').textContent='Save changes';
+  } else {
+    editCtx=null; afFloor=parseInt(floorOf(tower+'-'+floor));
+    q('afTitle').textContent='New Arrival';
+    ['afTicket','afSpot','afName','afPhone','afUnit','afPlate','afMake','afColor','afDriver'].forEach(id=>q(id).value='');
+    q('afPos').value=''; q('afTier').value='resident'; q('afSave').textContent='Park car';
+  }
+  q('afF3').classList.toggle('on',afFloor===3); q('afF4').classList.toggle('on',afFloor===4);
+  openSheet('arrivalSheet');
+}
+function saveArrival(){
+  const q=s=>document.getElementById(s);
+  const ticket=q('afTicket').value.trim(), spot=q('afSpot').value.trim();
+  if(!ticket){ alert('Enter the ticket number from the key tag.'); return; }
+  if(!spot){ alert('Enter the spot number.'); return; }
+  const key=findFloorKey(afFloor,spot);
+  if(!key){ alert('Spot '+spot+' is not on the floor '+afFloor+' map.'); return; }
+  const o=F[key];
+  const existing=(o.cars||{})[spot];
+  if(existing && !(editCtx && editCtx.key===key && editCtx.spot===spot)){ alert('Spot '+spot+' already has ticket '+existing.ticket+'.'); return; }
+  const car={ ticket, pos:q('afPos').value, tier:q('afTier').value, name:q('afName').value.trim(),
+    phone:q('afPhone').value.trim(), unit:q('afUnit').value.trim(), plate:q('afPlate').value.trim().toUpperCase(),
+    make:q('afMake').value.trim(), color:q('afColor').value.trim(), driver:q('afDriver').value.trim(),
+    in: existing? existing.in : Date.now(), paid: existing? !!existing.paid : false, keyMissing: existing? !!existing.keyMissing : false };
+  if(editCtx && (editCtx.key!==key || editCtx.spot!==spot)){
+    const oo=F[editCtx.key]; if(oo.carsRef) oo.carsRef.child(editCtx.spot).remove(); if(oo.cars) delete oo.cars[editCtx.spot]; paint(editCtx.key);
+  }
+  if(o.carsRef) o.carsRef.child(spot).set(car);
+  if(!o.cars) o.cars={}; o.cars[spot]=car;
+  closeSheets(); paint(key); renderCars();
+  if(view!=='cars'){ tower=FLOORS[key].tower; floor=floorOf(key)+'f'; show(); }
+}
+function stopScan(){ if(scanStream){ scanStream.getTracks().forEach(t=>t.stop()); scanStream=null; } const v=document.getElementById('scanVid'); if(v) v.style.display='none'; }
+async function startScan(){
+  const vid=document.getElementById('scanVid');
+  if(!('BarcodeDetector' in window) || !navigator.mediaDevices){ alert('Scanning is not supported on this phone — type the ticket number.'); return; }
+  try{
+    scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+    vid.srcObject=scanStream; vid.style.display='block'; await vid.play();
+    const det=new BarcodeDetector({formats:['code_128','code_39','ean_13','qr_code']});
+    const tick=async()=>{ if(!scanStream) return;
+      try{ const codes=await det.detect(vid); if(codes && codes.length){ document.getElementById('afTicket').value=codes[0].rawValue; stopScan(); return; } }catch(e){}
+      setTimeout(tick,350); };
+    tick();
+  }catch(e){ alert('Camera unavailable — type the ticket number.'); stopScan(); }
+}
+document.getElementById('arrivalBtn').addEventListener('click',()=>openArrival(null));
+document.getElementById('afCancel').addEventListener('click',closeSheets);
+document.getElementById('afSave').addEventListener('click',saveArrival);
+document.getElementById('afScan').addEventListener('click',startScan);
+document.getElementById('afF3').addEventListener('click',()=>{ afFloor=3; document.getElementById('afF3').classList.add('on'); document.getElementById('afF4').classList.remove('on'); });
+document.getElementById('afF4').addEventListener('click',()=>{ afFloor=4; document.getElementById('afF4').classList.add('on'); document.getElementById('afF3').classList.remove('on'); });
+document.getElementById('carSearch').addEventListener('input',renderCars);
+function setView(v){
+  view=v;
+  document.getElementById('vw-map').classList.toggle('on',v==='map');
+  document.getElementById('vw-cars').classList.toggle('on',v==='cars');
+  document.getElementById('panes').style.display = v==='map'? 'block':'none';
+  document.getElementById('carsView').style.display = v==='cars'? 'block':'none';
+  document.querySelector('.stats').style.display = v==='map'? 'grid':'none';
+  document.querySelector('.hint').style.display = v==='map'? 'block':'none';
+  if(v==='cars') renderCars();
+}
+document.getElementById('vw-map').addEventListener('click',()=>setView('map'));
+document.getElementById('vw-cars').addEventListener('click',()=>setView('cars'));
+setInterval(()=>{ if(view==='cars') renderCars(); },30000);
+
 function setSync(mode,txt){ const s=document.getElementById('sync'); s.className='sync '+mode; document.getElementById('syncTxt').textContent=txt; }
 try{
   firebase.initializeApp(FIREBASE_CONFIG);
@@ -360,6 +644,13 @@ try{
       paint(key);
     });
   });
+  Object.entries(F).forEach(([key,o])=>{
+    o.carsRef=db.ref(o.fl.node.replace('/spots','/cars'));
+    o.carsRef.on('value',snap=>{ o.cars=snap.val()||{}; paint(key); renderCars(); });
+  });
+  const histRef=db.ref('history');
+  Object.values(F).forEach(o=>o.histRef=histRef);
+  histRef.on('value',snap=>{ HIST=snap.val()||{}; renderCars(); });
   db.ref('.info/connected').on('value',s=>{ if(s.val()===true) setSync('live','Live · shared'); else setSync('off','Offline · this phone'); });
 }catch(e){ setSync('off','Offline · this phone'); }
 </script>
