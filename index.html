@@ -149,6 +149,12 @@
   .stall.hascar text{font-weight:700}
   .stall.keyx rect{stroke:#ffb020 !important;filter:drop-shadow(0 0 7px rgba(255,176,32,.85))}
   .unit.perm{fill:var(--gold-l);font-weight:700}
+  .scanBtn{appearance:none;border-radius:15px;padding:0 16px;background:transparent;border:1px solid rgba(192,163,95,.5);color:var(--gold-l);font:inherit;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.08em;cursor:pointer}
+  .scanBtn:active{transform:scale(.96)}
+  .chips{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;align-items:center}
+  .chipf{appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);border-radius:99px;padding:7px 13px;font:inherit;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+  .chipf.on{border-color:rgba(192,163,95,.65);color:var(--gold-l);background:rgba(192,163,95,.12)}
+  .chipf.gold{border-color:rgba(192,163,95,.65);color:#171106;background:linear-gradient(135deg,var(--gold-l),var(--gold))}
   .floorpane{display:none}.floorpane.on{display:block}
   .bottombar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(0,0,0,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(192,163,95,.35);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
   .bb-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -188,6 +194,7 @@
   <div class="viewrow">
     <div class="seg viewseg"><button id="vw-map" class="on">Map</button><button id="vw-cars">Cars <span class="cnt"><b id="carCount">0</b></span></button></div>
     <button class="arrivalBtn" id="arrivalBtn">+ Arrival</button>
+    <button class="scanBtn" id="quickScan" type="button">Scan</button>
   </div>
   </div>
 
@@ -203,6 +210,7 @@
 
   <div id="carsView" style="display:none">
     <div class="carsum"><span><b id="cvNow">0</b> parked</span><i>\u00b7</i><span><b id="cvIn">0</b> in</span><i>\u00b7</i><span><b id="cvOut">0</b> out</span><i>\u00b7</i><span><b id="cvRev">$0</b> today</span></div>
+    <div class="chips"><button class="chipf on" data-f="all" type="button">All</button><button class="chipf" data-f="resident" type="button">Residents</button><button class="chipf" data-f="visitor" type="button">Visitors</button><button class="chipf" data-f="key" type="button">Key missing</button><button class="chipf gold" id="shiftBtn" type="button" style="margin-left:auto">Shift report</button></div>
     <input id="carSearch" class="search" type="search" placeholder="Search ticket, plate, name, unit, spot...">
     <div id="carGrid" class="cargrid"></div>
     <p class="hint" id="carsEmpty">No cars parked right now. Tap + Arrival to park the first one.</p>
@@ -228,8 +236,9 @@
 <div class="sheet" id="arrivalSheet">
   <div class="sheetttl" id="afTitle">New Arrival</div>
   <div class="field"><label>Ticket # — scan the key tag or type it</label>
-    <div style="display:flex;gap:8px"><input id="afTicket" inputmode="numeric" placeholder="e.g. 6211" style="flex:1"><button class="abtn ghost" id="afScan" type="button" style="flex:none;padding:0 16px">Scan</button></div>
+    <div style="display:flex;gap:8px"><input id="afTicket" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="e.g. 603A or 6211" style="flex:1"><button class="abtn ghost" id="afScan" type="button" style="flex:none;padding:0 16px">Scan</button></div>
     <video id="scanVid" playsinline style="display:none;width:100%;border-radius:12px;margin-top:8px"></video>
+    <div id="afResNote" style="display:none;margin-top:8px;font-size:.82rem;font-weight:600;color:var(--gold-l)"></div>
   </div>
   <div class="frow">
     <div class="field"><label>Floor</label><div class="seg" style="margin:0"><button id="afF3" type="button">3rd</button><button id="afF4" type="button" class="on">4th</button></div></div>
@@ -459,7 +468,7 @@ document.getElementById('resetBtn').addEventListener('click',()=>{
 Object.keys(F).forEach(k=>paint(k));
 show();
 
-let HIST={}, view='map', sheetCtx=null, editCtx=null, afFloor=4, scanStream=null;
+let HIST={}, RES={}, resRef=null, carFilter='all', view='map', sheetCtx=null, editCtx=null, afFloor=4, scanStream=null;
 function floorOf(key){ return key.includes('3f') ? '3' : '4'; }
 function spotLabel(key,spot,c){ return floorOf(key)+'/'+spot+((c&&c.pos)||''); }
 function fmtEl(ms){ const m=Math.max(0,Math.floor(ms/60000)); const d=Math.floor(m/1440), h=Math.floor(m%1440/60), mm=m%60;
@@ -487,6 +496,9 @@ function renderCars(){
   const sorted=cars.slice().sort((a,b)=>a.c.in-b.c.in);
   let shown=0;
   sorted.forEach(({key,spot,c})=>{
+    if(carFilter==='resident' && c.tier!=='resident') return;
+    if(carFilter==='visitor' && c.tier==='resident') return;
+    if(carFilter==='key' && !c.keyMissing) return;
     const hay=(c.ticket+' '+spotLabel(key,spot,c)+' '+(c.name||'')+' '+(c.plate||'')+' '+(c.unit||'')+' '+(c.make||'')).toLowerCase();
     if(q && !hay.includes(q)) return;
     shown++;
@@ -645,6 +657,10 @@ function saveArrival(){
     const oo=F[editCtx.key]; if(oo.carsRef) oo.carsRef.child(editCtx.spot).remove(); if(oo.cars) delete oo.cars[editCtx.spot]; paint(editCtx.key);
   }
   if(o.carsRef) o.carsRef.child(spot).set(car);
+  if(car.tier==='resident' && resRef){
+    const nk=car.ticket.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    resRef.child(nk).set({ticket:car.ticket, name:car.name, phone:car.phone, unit:car.unit, plate:car.plate, make:car.make, color:car.color, key, spot});
+  }
   if(!o.cars) o.cars={}; o.cars[spot]=car;
   closeSheets(); paint(key); renderCars();
   if(view!=='cars'){ tower=FLOORS[key].tower; floor=floorOf(key)+'f'; show(); }
@@ -681,6 +697,72 @@ document.getElementById('afScan').addEventListener('click',startScan);
 document.getElementById('afF3').addEventListener('click',()=>{ afFloor=3; document.getElementById('afF3').classList.add('on'); document.getElementById('afF4').classList.remove('on'); });
 document.getElementById('afF4').addEventListener('click',()=>{ afFloor=4; document.getElementById('afF4').classList.add('on'); document.getElementById('afF3').classList.remove('on'); });
 document.getElementById('carSearch').addEventListener('input',renderCars);
+
+const UNIT2SPOT={};
+Object.entries(FLOORS).forEach(([k,fl])=>{ fl.spots.forEach(([id,label])=>{ if(label){ const u=label.replace(/^T3-/,''); if(!UNIT2SPOT[u]) UNIT2SPOT[u]={key:k,spot:id}; } }); });
+Object.entries(PERM).forEach(([fs,u])=>{ const pr=fs.split('-'); const k=Object.keys(FLOORS).find(kk=>floorOf(kk)===pr[0] && FLOORS[kk].spots.some(sp=>sp[0]===pr[1])); if(k && !UNIT2SPOT[u]) UNIT2SPOT[u]={key:k,spot:pr[1]}; });
+let afDebounce=null;
+document.getElementById('afTicket').addEventListener('input',()=>{
+  clearTimeout(afDebounce);
+  afDebounce=setTimeout(()=>{
+    const q=s=>document.getElementById(s);
+    const raw=q('afTicket').value.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    const note=q('afResNote');
+    if(raw.length<3){ note.style.display='none'; return; }
+    const rec=RES[raw];
+    const base=raw.replace(/[A-Z]+$/,'');
+    const guess= rec? {key:rec.key, spot:rec.spot} : (UNIT2SPOT[raw] || UNIT2SPOT[base]);
+    if(rec){
+      if(rec.name) q('afName').value=rec.name;
+      if(rec.phone) q('afPhone').value=rec.phone;
+      if(rec.unit) q('afUnit').value=rec.unit;
+      if(rec.plate) q('afPlate').value=rec.plate;
+      if(rec.make) q('afMake').value=rec.make;
+      if(rec.color) q('afColor').value=rec.color;
+      q('afTier').value='resident';
+    }
+    if(guess){
+      afFloor=parseInt(floorOf(guess.key));
+      q('afF3').classList.toggle('on',afFloor===3); q('afF4').classList.toggle('on',afFloor===4);
+      q('afSpot').value=guess.spot;
+      note.textContent=(rec? 'Resident on file' : 'Permanent spot found')+' \u00b7 Spot '+floorOf(guess.key)+'/'+guess.spot+' filled in';
+      note.style.display='block';
+    } else if(rec){
+      note.textContent='Resident on file \u00b7 details filled in';
+      note.style.display='block';
+    } else { note.style.display='none'; }
+  },350);
+});
+document.querySelectorAll('.chipf[data-f]').forEach(b=>b.addEventListener('click',()=>{
+  carFilter=b.dataset.f;
+  document.querySelectorAll('.chipf[data-f]').forEach(x=>x.classList.toggle('on',x===b));
+  renderCars();
+}));
+document.getElementById('shiftBtn').addEventListener('click',openShiftReport);
+document.getElementById('quickScan').addEventListener('click',()=>{ openArrival(null); setTimeout(startScan,420); });
+function openShiftReport(){
+  const cars=allCars();
+  const dayStart=new Date(); dayStart.setHours(0,0,0,0); const t0=dayStart.getTime();
+  const histToday=Object.values(HIST).filter(x=>x.out>=t0);
+  const rev=histToday.reduce((s,x)=>s+(x.paid? (x.amount||0):0),0) + cars.filter(x=>x.c.paid).reduce((s,x)=>s+amountDue(x.c),0);
+  const dueCars=cars.filter(x=>!x.c.paid);
+  const dueTot=dueCars.reduce((s,x)=>s+amountDue(x.c),0);
+  const inToday=cars.filter(x=>x.c.in>=t0).length + histToday.length;
+  const sorted=cars.slice().sort((a,b)=>a.c.in-b.c.in);
+  const lines=sorted.map(({key,spot,c})=>c.ticket+' \u00b7 '+spotLabel(key,spot,c)+' \u00b7 '+fmtEl(Date.now()-c.in)).join('<br>');
+  const txt='VALET SHIFT REPORT \u2014 '+new Date().toLocaleString([], {weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})
+    +'\nParked now: '+cars.length+'\nIn today: '+inToday+'\nOut today: '+histToday.length+'\nRevenue today: $'+rev+'\nStill due: $'+dueTot+' ('+dueCars.length+' cars)'
+    +'\n\nREMAINING CARS:\n'+sorted.map(({key,spot,c})=>c.ticket+' \u2014 '+spotLabel(key,spot,c)).join('\n');
+  document.getElementById('carSheet').innerHTML='<div class="sheetttl">Shift Report<span class="sub">St Tropez by the Bay</span></div>'
+    + row('Parked now', cars.length) + row('In today', inToday) + row('Out today', histToday.length)
+    + row('Revenue today', '$'+rev) + row('Still due', '$'+dueTot+' \u00b7 '+dueCars.length+' cars')
+    + '<div style="margin-top:12px;font-size:.86rem;line-height:1.7;color:var(--muted)">'+(lines||'No cars in.')+'</div>'
+    + '<div class="actions"><button class="abtn gold" id="srCopy">Copy report</button><button class="abtn ghost" id="srClose">Close</button></div>';
+  openSheet('carSheet');
+  document.getElementById('srClose').addEventListener('click',closeSheets);
+  document.getElementById('srCopy').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText(txt); alert('Report copied \u2014 paste it anywhere.'); }catch(e){ prompt('Copy the report:', txt); } });
+}
+
 function setView(v){
   view=v;
   document.getElementById('vw-map').classList.toggle('on',v==='map');
@@ -723,6 +805,8 @@ try{
   const histRef=db.ref('history');
   Object.values(F).forEach(o=>o.histRef=histRef);
   histRef.on('value',snap=>{ HIST=snap.val()||{}; renderCars(); });
+  resRef=db.ref('residents');
+  resRef.on('value',snap=>{ RES=snap.val()||{}; });
   db.ref('.info/connected').on('value',s=>{ if(s.val()===true) setSync('live','Live · shared'); else setSync('off','Offline · this phone'); });
 }catch(e){ setSync('off','Offline · this phone'); }
 </script>
