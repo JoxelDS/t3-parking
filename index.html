@@ -208,6 +208,18 @@
   .dock .viewrow{margin:0}
   .dock .bottombar{position:static;background:transparent;border-top:1px solid rgba(255,255,255,.07);border-radius:0;padding:8px 2px 0;box-shadow:none}
   body{padding-bottom:172px}
+
+  /* ===== CALM V3: header fix, no side-scroll, scan out ===== */
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{overflow-x:hidden;max-width:100%}
+  .appbar-in{flex-direction:row;align-items:center;text-align:left;gap:10px;padding:10px 12px 8px}
+  .brandlogo{height:40px;width:auto;flex:none}
+  .ttl{flex:1;min-width:0;text-align:left}
+  .ttl b{font-size:1rem;letter-spacing:.04em;white-space:nowrap}
+  #sync{margin-left:auto;flex:none}
+  .maphead{display:none}
+  #quickScan,#afScan{display:none!important}
+  .dock{box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -249,7 +261,7 @@
     <p class="hint" id="carsEmpty">No cars parked right now. Tap + Arrival to park the first one.</p>
   </div>
 
-  <p class="hint"><b class="hg">Tap</b> available <i>·</i> <b class="hr">Tap again</b> taken <i>·</i> <b>Tap again</b> clear<br><span class="hsub">Shared live — everyone on this link sees the same deck · tap a parked car to open its ticket</span></p>
+  
 </div>
 
 <div class="dock">
