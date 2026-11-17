@@ -523,8 +523,10 @@ function openCar(key,spot){
     + row('Pricing', c.tier ? c.tier[0].toUpperCase()+c.tier.slice(1) : 'Resident')
     + row('Parked by', c.driver)
     + row('Amount', c.paid? 'PAID' : 'Due $'+due)
+    + (c.paid && c.payMethod? row('Paid by', c.payMethod) : '')
     + (c.keyMissing? row('Key', '⚠ MISSING') : '')
     + '<div class="actions">'
+    + (!c.paid? '<button class="abtn gold" id="csCharge" style="grid-column:1/-1">Charge $'+due+'</button>' : '')
     + (c.phone? '<button class="abtn" id="csText">Text guest</button>' : '')
     + '<button class="abtn" id="csPaid">'+(c.paid? 'Mark unpaid' : 'Mark as paid')+'</button>'
     + '<button class="abtn" id="csKey">'+(c.keyMissing? 'Key found' : 'Key missing')+'</button>'
@@ -534,11 +536,57 @@ function openCar(key,spot){
   openSheet('carSheet');
   const q=s=>document.getElementById(s);
   if(c.phone) q('csText').addEventListener('click',()=>{ location.href='sms:'+c.phone.replace(/[^0-9+]/g,''); });
+  const chB=document.getElementById('csCharge'); if(chB) chB.addEventListener('click',()=>openPay(key,spot));
   q('csPaid').addEventListener('click',()=>{ setCarField(key,spot,'paid',!c.paid); });
   q('csKey').addEventListener('click',()=>{ setCarField(key,spot,'keyMissing',!c.keyMissing); });
   q('csEdit').addEventListener('click',()=>{ closeSheets(); openArrival({key,spot}); });
   q('csOut').addEventListener('click',()=>{ checkoutCar(key,spot); });
 }
+
+const PAYCFG={squareClientId:'', stripeLink:''};
+function markPaid(key,spot,method){
+  const o=F[key]; if(!o.carsRef) return;
+  o.carsRef.child(spot).update({paid:true,payMethod:method});
+  if(o.cars && o.cars[spot]){ o.cars[spot].paid=true; o.cars[spot].payMethod=method; }
+  paint(key); renderCars(); openCar(key,spot);
+}
+function openPay(key,spot){
+  const c=(F[key].cars||{})[spot]; if(!c) return;
+  sheetCtx={key,spot};
+  const due=amountDue(c);
+  document.getElementById('carSheet').innerHTML=
+    '<div class="sheetttl">Charge<span class="sub">Ticket '+c.ticket+' \u00b7 Spot '+spotLabel(key,spot,c)+'</span></div>'
+    + row('Pricing', c.tier? c.tier[0].toUpperCase()+c.tier.slice(1) : 'Resident')
+    + row('Parked for', fmtEl(Date.now()-c.in))
+    + row('Total due', '$'+due)
+    + '<div class="actions">'
+    + '<button class="abtn gold" id="paySquare">Tap / card \u2014 Square</button>'
+    + '<button class="abtn" id="payLink">Payment link</button>'
+    + '<button class="abtn" id="payCash">Cash</button>'
+    + '<button class="abtn" id="payManual">Mark as paid</button>'
+    + '<button class="abtn ghost" id="payBack" style="grid-column:1/-1">\u2190 Back to ticket</button>'
+    + '</div>'
+    + '<p class="hint" style="margin-top:12px">Square / Stripe plug into the company account \u2014 a 2-minute manager setup.</p>';
+  openSheet('carSheet');
+  const q=s=>document.getElementById(s);
+  q('payBack').addEventListener('click',()=>openCar(key,spot));
+  q('payCash').addEventListener('click',()=>markPaid(key,spot,'Cash'));
+  q('payManual').addEventListener('click',()=>markPaid(key,spot,'Manual'));
+  q('paySquare').addEventListener('click',()=>{
+    if(PAYCFG.squareClientId){
+      const data={amount_money:{amount:due*100,currency_code:'USD'},callback_url:location.href.split('?')[0],client_id:PAYCFG.squareClientId,version:'1.3',notes:'Valet ticket '+c.ticket+' \u00b7 Spot '+spotLabel(key,spot,c),options:{supported_tender_types:['CREDIT_CARD','CASH','OTHER','SQUARE_GIFT_CARD','CARD_ON_FILE']}};
+      markPaid(key,spot,'Square');
+      location.href='square-commerce-v1://payment/create?data='+encodeURIComponent(JSON.stringify(data));
+    } else {
+      alert('Demo mode: this button opens Square Tap to Pay as soon as the company Square account is connected.');
+    }
+  });
+  q('payLink').addEventListener('click',()=>{
+    if(PAYCFG.stripeLink){ window.open(PAYCFG.stripeLink,'_blank'); }
+    else { alert('Demo mode: this opens the Stripe payment link / QR as soon as the company Stripe account is connected.'); }
+  });
+}
+
 function setCarField(key,spot,field,val){
   const o=F[key]; if(!o.carsRef) return;
   o.carsRef.child(spot).child(field).set(val);
@@ -548,7 +596,7 @@ function setCarField(key,spot,field,val){
 function checkoutCar(key,spot){
   const o=F[key]; const c=(o.cars||{})[spot]; if(!c) return;
   if(!confirm('Check out ticket '+c.ticket+' from spot '+spotLabel(key,spot,c)+'?')) return;
-  const rec={ticket:c.ticket, spot:spotLabel(key,spot,c), in:c.in, out:Date.now(), amount:amountDue(c), paid:!!c.paid, tier:c.tier||'resident'};
+  const rec={ticket:c.ticket, spot:spotLabel(key,spot,c), in:c.in, out:Date.now(), amount:amountDue(c), paid:!!c.paid, method:c.payMethod||'', tier:c.tier||'resident'};
   if(o.histRef) o.histRef.push(rec);
   if(o.carsRef) o.carsRef.child(spot).remove();
   if(o.cars) delete o.cars[spot];
