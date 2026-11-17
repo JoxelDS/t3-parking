@@ -2,91 +2,118 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Tower 3 · 4th Floor — Valet Parking Map</title>
-<meta name="description" content="Interactive valet parking map — Tower 3, 4th floor. Tap a spot: green = available, red = not available. Shared live across devices.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tower 3 Valet — Parking Map</title>
+<meta name="description" content="Interactive valet parking map — Tower 3, St Tropez by the Bay. Tap a spot: green = available, red = not available. Shared live across devices.">
+<meta name="theme-color" content="#0b1220">
 <style>
-  :root{--ink:#17233b;--muted:#5b6b8c;--green:#22b573;--green-d:#12805a;--red:#e5484d;--red-d:#b3272e;--line:#26314d;--bg:#0d1526;--panel:#131f38}
+  :root{
+    --bg:#0b1220; --bg2:#0e1930; --card:#152238; --card2:#1a2a47; --line:#26355a;
+    --ink:#eef2fa; --muted:#93a5c9; --faint:#64769c;
+    --green:#22b573; --green-t:#0d3d28; --red:#e5484d; --blue:#7ea4ff;
+    --radius:18px; --ease:cubic-bezier(.22,.9,.28,1);
+  }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:#eef2fa;min-height:100vh}
-  header{padding:14px 16px 10px;text-align:center}
-  h1{font-size:1.25rem;font-weight:800;letter-spacing:.02em}
-  h1 span{color:#7ea4ff}
-  .sub{color:#9fb0d0;font-size:.85rem;margin-top:2px}
-  .bar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;padding:8px 12px 4px}
-  .chip{background:var(--panel);border:1px solid #26355a;border-radius:99px;padding:6px 12px;font-size:.85rem;font-weight:600}
-  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:0}
-  .dot.g{background:var(--green)} .dot.r{background:var(--red)} .dot.n{background:#fff;border:1px solid #8894ad}
-  #sync{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:#9fb0d0}
-  #syncDot{width:9px;height:9px;border-radius:50%;background:#f5b83d}
-  #syncDot.live{background:#2ee59d;box-shadow:0 0 8px #2ee59d}
-  #syncDot.off{background:#e5484d}
-  button.reset{background:#1d2c4d;color:#dbe6ff;border:1px solid #33477a;border-radius:99px;padding:7px 14px;font-size:.85rem;font-weight:700;cursor:pointer}
-  button.reset:active{transform:scale(.97)}
-  .hint{text-align:center;color:#8494b5;font-size:.8rem;padding:2px 12px 8px}
-  .mapwrap{max-width:1100px;margin:0 auto;padding:4px 8px 26px}
-  .mapcard{background:#f7f9fc;border-radius:14px;padding:8px;box-shadow:0 18px 40px -18px rgba(0,0,0,.65)}
+  html{scrollbar-width:thin}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);color:var(--ink);min-height:100vh;padding-bottom:92px}
+  /* ---------- App bar ---------- */
+  .appbar{position:sticky;top:0;z-index:30;background:rgba(11,18,32,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(126,164,255,.14)}
+  .appbar-in{max-width:1060px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+  .mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#2456c8,#2b3a8f);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;letter-spacing:.02em;box-shadow:0 6px 16px -6px rgba(36,86,200,.8);flex:none}
+  .ttl{line-height:1.15;min-width:0}
+  .ttl b{font-size:1.02rem;font-weight:800;letter-spacing:.01em;display:block}
+  .ttl span{font-size:.76rem;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .sync{margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 11px;font-size:.76rem;font-weight:700;color:var(--muted);flex:none}
+  .sync i{width:8px;height:8px;border-radius:50%;background:#f5b83d;display:block}
+  .sync.live{color:#b9f4dd}.sync.live i{background:#2ee59d;box-shadow:0 0 9px #2ee59d}
+  .sync.off{color:#ffc9cb}.sync.off i{background:var(--red)}
+  /* ---------- Layout ---------- */
+  .wrap{max-width:1060px;margin:0 auto;padding:16px 14px 0}
+  /* ---------- Floor switch ---------- */
+  .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:5px;gap:5px}
+  .seg button{flex:1;appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:800;font-size:.98rem;padding:11px 8px;border-radius:11px;cursor:pointer;transition:all .22s var(--ease);display:flex;align-items:center;justify-content:center;gap:8px}
+  .seg button.on{background:linear-gradient(135deg,#2456c8,#2b3a8f);color:#fff;box-shadow:0 8px 18px -8px rgba(36,86,200,.85)}
+  .seg .cnt{font-size:.74rem;font-weight:800;background:rgba(255,255,255,.16);border-radius:99px;padding:2px 8px}
+  .seg button:not(.on) .cnt{background:rgba(126,164,255,.13);color:var(--muted)}
+  .seg .cnt b{color:#2ee59d;font-weight:800}
+  /* ---------- Stats ---------- */
+  .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:13px 14px 11px;position:relative;overflow:hidden}
+  .stat::before{content:"";position:absolute;top:0;left:16px;right:16px;height:3px;border-radius:99px;background:var(--faint);opacity:.35}
+  .stat.g::before{background:var(--green);opacity:1;box-shadow:0 2px 12px rgba(34,181,115,.55)}
+  .stat.r::before{background:var(--red);opacity:1;box-shadow:0 2px 12px rgba(229,72,77,.5)}
+  .stat b{font-size:1.55rem;font-weight:850;line-height:1;display:block;font-variant-numeric:tabular-nums}
+  .stat span{font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:block;margin-top:5px}
+  /* ---------- Map ---------- */
+  .mapcard{margin-top:12px;background:#f7f9fc;border-radius:22px;padding:10px;box-shadow:0 24px 50px -20px rgba(0,0,0,.7);animation:rise .45s var(--ease) both}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   svg{width:100%;height:auto;display:block}
   .stall{cursor:pointer}
-  .stall rect{fill:#ffffff;stroke:var(--line);stroke-width:2;transition:fill .15s ease}
-  .stall text{fill:var(--ink);font-weight:700;pointer-events:none}
+  .stall rect{fill:#fff;stroke:#26314d;stroke-width:2;rx:7;transition:fill .18s ease,opacity .25s ease}
+  .stall text{fill:#17233b;font-weight:750;pointer-events:none}
   .stall.avail rect{fill:var(--green)}
   .stall.taken rect{fill:var(--red)}
-  .stall.avail text,.stall.taken text{fill:#ffffff}
-  .stall:active rect{filter:brightness(.88)}
+  .stall.avail text,.stall.taken text{fill:#fff}
+  .stall:active rect{filter:brightness(.85)}
+  body.only-avail .stall:not(.avail){opacity:.18}
   .unit{fill:#41506e;font-size:11.5px;font-weight:600}
-  .unit.light{fill:#5b6b8c}
   .static{pointer-events:none}
+  .floorpane{display:none}.floorpane.on{display:block}
+  /* ---------- Bottom bar ---------- */
+  .bottombar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(11,18,32,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(126,164,255,.14);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+  .bb-in{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .legend{display:flex;gap:12px;font-size:.78rem;color:var(--muted);font-weight:600;align-items:center}
+  .legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:-1px}
+  .switch{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;user-select:none}
+  .switch .tr{width:40px;height:23px;border-radius:99px;background:#26355a;position:relative;transition:background .2s;flex:none}
+  .switch .tr::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#dbe6ff;transition:left .2s var(--ease)}
+  .switch.on{color:var(--ink)} .switch.on .tr{background:var(--green)} .switch.on .tr::after{left:20px}
+  .reset{background:#1d2c4d;color:#dbe6ff;border:1px solid #33477a;border-radius:99px;padding:8px 15px;font:inherit;font-size:.82rem;font-weight:800;cursor:pointer}
+  .reset:active{transform:scale(.96)}
+  .hint{text-align:center;color:var(--faint);font-size:.78rem;margin-top:12px;line-height:1.5}
+  @media(max-width:560px){ .stat b{font-size:1.3rem} .ttl b{font-size:.95rem} }
+  @media(prefers-reduced-motion:reduce){ *{animation:none !important;transition:none !important} }
 </style>
 </head>
 <body>
-<header>
-  <h1>Tower 3 · <span>4th Floor</span> — Valet Parking</h1>
-  <div class="sub">St Tropez by the Bay · Gold Coast Parking</div>
-</header>
 
-<div class="bar">
-  <span class="chip"><span class="dot g"></span><span id="cAvail">0</span> available</span>
-  <span class="chip"><span class="dot r"></span><span id="cTaken">0</span> not available</span>
-  <span class="chip"><span class="dot n"></span><span id="cFree">0</span> unmarked</span>
-  <button class="reset" id="resetBtn">Reset all</button>
-  <span id="sync"><span id="syncDot"></span><span id="syncTxt">connecting…</span></span>
+<div class="appbar"><div class="appbar-in">
+  <div class="mark">T3</div>
+  <div class="ttl"><b>Tower 3 — Valet Parking</b><span>St Tropez by the Bay · Gold Coast</span></div>
+  <span class="sync" id="sync"><i></i><span id="syncTxt">connecting…</span></span>
+</div></div>
+
+<div class="wrap">
+  <div class="seg" role="tablist">
+    <button id="tab3" >3rd Floor <span class="cnt"><b id="cnt3">0</b> open</span></button>
+    <button id="tab4" class="on">4th Floor <span class="cnt"><b id="cnt4">0</b> open</span></button>
+  </div>
+
+  <div class="stats">
+    <div class="stat g"><b id="cAvail">0</b><span>Available</span></div>
+    <div class="stat r"><b id="cTaken">0</b><span>Not available</span></div>
+    <div class="stat"><b id="cFree">0</b><span>Unmarked</span></div>
+  </div>
+
+  <div class="mapcard floorpane on" id="pane4"></div>
+  <div class="mapcard floorpane" id="pane3"></div>
+
+  <p class="hint">Tap a spot: <b style="color:#2ee59d">green = available</b> · tap again: <b style="color:#ff8589">red = not available</b> · tap again: clear.<br>Everyone with this link sees the same map, live.</p>
 </div>
-<p class="hint">Tap a spot: <b style="color:#2ee59d">green = available</b> · tap again: <b style="color:#ff8589">red = not available</b> · tap again: clear. Everyone with this link sees the same map, live.</p>
 
-<div class="mapwrap"><div class="mapcard">
-<svg viewBox="0 0 1240 880" role="img" aria-label="Tower 3 fourth floor parking map">
-  <!-- caution banner -->
-  <g class="static">
-    <defs><pattern id="hz" width="16" height="26" patternUnits="userSpaceOnUse"><rect width="16" height="26" fill="#f7c948"/><rect width="8" height="26" fill="#141414"/></pattern></defs>
-    <rect x="375" y="212" width="380" height="26" fill="url(#hz)"/>
-    <text x="565" y="262" text-anchor="middle" font-size="21" font-weight="800" fill="#e5484d" letter-spacing="1">VALET PLEASE DRIVE SLOW 5mph</text>
-  </g>
-  <!-- title -->
-  <g class="static">
-    <text x="1135" y="335" text-anchor="middle" font-size="42" font-weight="800" fill="#2b3a8f">4th Floor</text>
-    <text x="1135" y="382" text-anchor="middle" font-size="42" font-weight="800" fill="#2b3a8f">Tower 3</text>
-  </g>
-  <!-- elevator -->
-  <g class="static" transform="rotate(28 470 495)">
-    <rect x="415" y="455" width="115" height="82" fill="#d5d9e0"/>
-    <text x="472" y="492" text-anchor="middle" font-size="24" font-weight="700" fill="#3c465c">Elev</text>
-    <text x="472" y="522" text-anchor="middle" font-size="26" font-weight="800" fill="#3c465c">T3</text>
-  </g>
-  <!-- handicap stall (decorative, as drawn on the map) -->
-  <g class="static" transform="rotate(-32 300 415)">
-    <rect x="268" y="368" width="58" height="96" fill="#ffffff" stroke="#26314d" stroke-width="2"/>
-    <text x="297" y="432" text-anchor="middle" font-size="40" fill="#2456c8">♿</text>
-  </g>
-  <text class="unit static" x="868" y="392">T2-1003</text>
-  <g id="spots"></g>
-</svg>
+<div class="bottombar"><div class="bb-in">
+  <div class="legend">
+    <span><i style="background:var(--green)"></i>Available</span>
+    <span><i style="background:var(--red)"></i>Taken</span>
+    <span><i style="background:#fff"></i>Unmarked</span>
+  </div>
+  <span class="switch" id="availSwitch"><span>Available only</span><span class="tr"></span></span>
+  <button class="reset" id="resetBtn">Reset floor</button>
 </div></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
-const SEED = {"186":"avail","196":"avail","197":"avail","198":"avail","199":"avail","200":"avail","209":"avail","211":"avail","227":"avail","190":"taken","233":"taken"};
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyDNR9PxjVAAEfCP5mJFV2HrU_YALZ01mMw",
   authDomain: "t3-valet-parking.firebaseapp.com",
@@ -96,96 +123,140 @@ const FIREBASE_CONFIG = {
   messagingSenderId: "877941758797",
   appId: "1:877941758797:web:7af2c8983d1a179c197504"
 };
-const SPOTS = [
- // top row (left to right): [num, unit, x, y, w, h, numY]
- ...[205,204,203,202,201,200,199,198,197,196,195,194,193,192,191,190,189,188,187,186].map((n,i)=>[n,["1502","1501","1406","1405","1404","1403","1402","1401","1006","1005","1004","1003","1002","1001","906","905","904","903","902","901"][i],105+i*57.5,92,56,98]),
- // left column (top to bottom)
- ...[206,207,208,209,210,211,212,213,214].map((n,i)=>[n,["1503","1504","1505","1506","1801","1802","1803","1804","1805"][i],18,232+i*60,66,52,"side"]),
- // middle row
- ...[219,220,221,222,223,224,225].map((n,i)=>[n,["502","503","TS06","504","TS05","505","506"][i],465+i*57.5,300,56,86]),
- // right column
- ...[227,228,229,230].map((n,i)=>[n,["TS04","TS03","TS02","TS01"][i],700,478+i*64,80,56,"side"]),
- // bottom row
- ...[231,232,233,234,235].map((n,i)=>[n,["605","604","603","H207","601"][i],742+i*57.5,718,56,84]),
- // singles
- [216,"H409",212,518,80,48,"left"],[215,"1806",258,566,80,48,"left"],
- [217,"H408",318,352,56,98,"angle1"],[218,"H407",382,330,56,98,"angle2"],[226,"501",762,398,56,92,"angle3"]
-];
 const NS="http://www.w3.org/2000/svg";
-const g=document.getElementById('spots');
-const els={};
-SPOTS.forEach(([num,unit,x,y,w,h,mode])=>{
-  const grp=document.createElementNS(NS,'g');
-  grp.setAttribute('class','stall'); grp.dataset.spot=num;
-  let transform='';
-  if(mode==='angle1') transform=`rotate(-32 ${x+w/2} ${y+h/2})`;
-  if(mode==='angle2') transform=`rotate(-32 ${x+w/2} ${y+h/2})`;
-  if(mode==='angle3') transform=`rotate(32 ${x+w/2} ${y+h/2})`;
-  if(transform) grp.setAttribute('transform',transform);
-  const r=document.createElementNS(NS,'rect');
-  r.setAttribute('x',x); r.setAttribute('y',y); r.setAttribute('width',w); r.setAttribute('height',h);
-  grp.appendChild(r);
-  const t=document.createElementNS(NS,'text');
-  t.setAttribute('x',x+w/2); t.setAttribute('y',y+h/2+9); t.setAttribute('text-anchor','middle');
-  t.setAttribute('font-size', w<60?24:26); t.textContent=num;
-  grp.appendChild(t);
-  g.appendChild(grp);
-  const u=document.createElementNS(NS,'text');
-  u.setAttribute('class','unit static');
-  if(mode==='side'){ u.setAttribute('x',x+w+8); u.setAttribute('y',y+h/2+4); }
-  else if(mode==='left'){ u.setAttribute('x',x-8); u.setAttribute('y',y+h/2+4); u.setAttribute('text-anchor','end'); }
-  else if(mode==='angle1'||mode==='angle2'){ u.setAttribute('x',x+w/2); u.setAttribute('y',y-10); u.setAttribute('text-anchor','middle'); if(transform) u.setAttribute('transform',`rotate(-32 ${x+w/2} ${y-10})`); }
-  else if(mode==='angle3'){ u.setAttribute('x',x+w/2); u.setAttribute('y',y-10); u.setAttribute('text-anchor','middle'); u.setAttribute('transform',`rotate(32 ${x+w/2} ${y-10})`); }
-  else { u.setAttribute('x',x+w/2); u.setAttribute('y',y-8); u.setAttribute('text-anchor','middle'); }
-  u.textContent='T3-'+unit;
-  g.appendChild(u);
-  els[num]=grp;
-  grp.addEventListener('click',()=>cycle(String(num)));
+function banner(x){return `<defs><pattern id="hz${x}" width="16" height="26" patternUnits="userSpaceOnUse"><rect width="16" height="26" fill="#f7c948"/><rect width="8" height="26" fill="#141414"/></pattern></defs><rect x="${x}" y="212" width="380" height="26" fill="url(#hz${x})"/><text x="${x+190}" y="262" text-anchor="middle" font-size="21" font-weight="800" fill="#e5484d" letter-spacing="1">VALET PLEASE DRIVE SLOW 5mph</text>`}
+function elev(x,y){return `<g class="static" transform="rotate(28 ${x+57} ${y+41})"><rect x="${x}" y="${y}" width="115" height="82" fill="#d5d9e0"/><text x="${x+57}" y="${y+37}" text-anchor="middle" font-size="24" font-weight="700" fill="#3c465c">Elev</text><text x="${x+57}" y="${y+67}" text-anchor="middle" font-size="26" font-weight="800" fill="#3c465c">T3</text></g>`}
+const FLOORS = {
+ "4f": { tab:"tab4", pane:"pane4", node:"t3-4f/spots", ls:"t3-4f-state",
+   seed:{"186":"avail","196":"avail","197":"avail","198":"avail","199":"avail","200":"avail","209":"avail","211":"avail","227":"avail","190":"taken","233":"taken"},
+   deco: banner(375) + elev(415,455) + `<text class="static" x="1135" y="335" text-anchor="middle" font-size="42" font-weight="800" fill="#2b3a8f">4th Floor</text><text class="static" x="1135" y="382" text-anchor="middle" font-size="42" font-weight="800" fill="#2b3a8f">Tower 3</text><text class="unit static" x="868" y="392">T2-1003</text>`,
+   spots: [
+    ...[205,204,203,202,201,200,199,198,197,196,195,194,193,192,191,190,189,188,187,186].map((n,i)=>[String(n),"T3-"+["1502","1501","1406","1405","1404","1403","1402","1401","1006","1005","1004","1003","1002","1001","906","905","904","903","902","901"][i],105+i*57.5,92,56,98,"top"]),
+    ...[206,207,208,209,210,211,212,213,214].map((n,i)=>[String(n),"T3-"+["1503","1504","1505","1506","1801","1802","1803","1804","1805"][i],18,232+i*60,66,52,"side"]),
+    ...[219,220,221,222,223,224,225].map((n,i)=>[String(n),"T3-"+["502","503","TS06","504","TS05","505","506"][i],465+i*57.5,300,56,86,"top"]),
+    ...[227,228,229,230].map((n,i)=>[String(n),"T3-"+["TS04","TS03","TS02","TS01"][i],700,478+i*64,80,56,"side"]),
+    ...[231,232,233,234,235].map((n,i)=>[String(n),"T3-"+["605","604","603","H207","601"][i],742+i*57.5,718,56,84,"top"]),
+    ["216","T3-H409",212,518,80,48,"left"],["215","T3-1806",258,566,80,48,"left"],
+    ["217","T3-H408",318,352,56,98,"a1"],["218","T3H407",382,330,56,98,"a1"],["226","T3-501",762,398,56,92,"a3"],
+    ["HC","",268,368,58,96,"a1"]
+   ]},
+ "3f": { tab:"tab3", pane:"pane3", node:"t3-3f/spots", ls:"t3-3f-state",
+   seed:{"38":"avail","42":"avail","49":"avail","75":"avail","81":"avail","82":"avail","83":"avail","93":"avail","94":"avail","HC":"avail"},
+   deco: banner(405) + elev(400,470) + `<text class="static" x="1085" y="622" text-anchor="middle" font-size="42" font-weight="800" fill="#2b3a8f">3rd Floor</text><text class="static" x="1085" y="669" text-anchor="middle" font-size="42" font-weight="800" fill="#2b3a8f">Tower 3</text>`,
+   spots: [
+    ...[59,58,57,56,55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38].map((n,i)=>[String(n),["T3-1603","T3-1602","T3-1601","T3-1206","T3-1205","T3-1204","Valet","T3-1202","T3-1201","T3-PH02","T3-1105","T3-1104","T3-1103","T3-1102","T3-1101","T3-1106","T3-705","T3-704","T3-703","T3-702","T3-701","T3-706"][i],128+i*50.5,105,48,95,"top"]),
+    ...[60,61,62,63,64,65,66,67,68].map((n,i)=>[String(n),"T3-"+["1604","1605","1606","1701","1702","1703","1704","1705","1706"][i],45,225+i*57,60,47,"side"]),
+    ...[73,74,75,76,77,78,79].map((n,i)=>[String(n),["T3-H309","T3-PH03","T3-1203T","T3-PH04","","T3-PH05","T3-PH06"][i],440+i*57.5,330,56,n===77?108:86,"top"]),
+    ...[95,94,93,92,91,90].map((n,i)=>[String(n),"T3-"+["801","802","803","804","805","806"][i],1015,320+i*57,65,47,"side"]),
+    ["70","T3-602",218,545,75,45,"left"],["69","T3-H308",218,620,75,45,"left"],
+    ["71","T3-H307",300,390,56,98,"a1"],["72","T3-H208",365,368,56,98,"a1"],
+    ["80","T3-PH01",655,470,92,46,"a4"],
+    ["81","Valet",672,520,90,38,"side"],["82","Valet",672,570,90,38,"side"],["83","Valet",672,620,90,38,"side"],
+    ["HC","",252,418,58,96,"a1"]
+   ]}
+};
+let active="4f";
+const F={};
+Object.entries(FLOORS).forEach(([key,fl])=>{
+  const pane=document.getElementById(fl.pane);
+  const svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('viewBox','0 0 1240 880');
+  svg.innerHTML = fl.deco + '<g class="spots"></g>';
+  pane.appendChild(svg);
+  const g=svg.querySelector('.spots');
+  const els={};
+  fl.spots.forEach(([id,label,x,y,w,h,mode])=>{
+    const grp=document.createElementNS(NS,'g');
+    grp.setAttribute('class','stall'); grp.dataset.spot=id;
+    let tr='';
+    if(mode==='a1') tr=`rotate(-32 ${x+w/2} ${y+h/2})`;
+    if(mode==='a3') tr=`rotate(32 ${x+w/2} ${y+h/2})`;
+    if(mode==='a4') tr=`rotate(-10 ${x+w/2} ${y+h/2})`;
+    if(tr) grp.setAttribute('transform',tr);
+    const r=document.createElementNS(NS,'rect');
+    r.setAttribute('x',x); r.setAttribute('y',y); r.setAttribute('width',w); r.setAttribute('height',h); r.setAttribute('rx',7);
+    grp.appendChild(r);
+    const t=document.createElementNS(NS,'text');
+    t.setAttribute('x',x+w/2); t.setAttribute('y',y+h/2+(id==='HC'?13:9)); t.setAttribute('text-anchor','middle');
+    t.setAttribute('font-size', id==='HC'?36:(w<52?21:25));
+    t.textContent = id==='HC' ? '♿' : id;
+    grp.appendChild(t); g.appendChild(grp);
+    if(label){
+      const u=document.createElementNS(NS,'text');
+      u.setAttribute('class','unit static');
+      if(mode==='side'){ u.setAttribute('x',x+w+8); u.setAttribute('y',y+h/2+4); }
+      else if(mode==='left'){ u.setAttribute('x',x-8); u.setAttribute('y',y+h/2+4); u.setAttribute('text-anchor','end'); }
+      else if(mode==='a1'){ u.setAttribute('x',x+w/2); u.setAttribute('y',y-10); u.setAttribute('text-anchor','middle'); u.setAttribute('transform',`rotate(-32 ${x+w/2} ${y-10})`); }
+      else if(mode==='a3'){ u.setAttribute('x',x+w/2); u.setAttribute('y',y-10); u.setAttribute('text-anchor','middle'); u.setAttribute('transform',`rotate(32 ${x+w/2} ${y-10})`); }
+      else if(mode==='a4'){ u.setAttribute('x',x+w+8); u.setAttribute('y',y+h/2+4); }
+      else { u.setAttribute('x',x+w/2); u.setAttribute('y',y-8); u.setAttribute('text-anchor','middle'); }
+      u.textContent=label; g.appendChild(u);
+    }
+    els[id]=grp;
+    grp.addEventListener('click',()=>cycle(key,id));
+  });
+  let state={};
+  try{ state=JSON.parse(localStorage.getItem(fl.ls)||'{}'); }catch(e){ state={}; }
+  if(!Object.keys(state).length) state={...fl.seed};
+  F[key]={fl,els,state,ref:null};
 });
-let state={};
-try{ state=JSON.parse(localStorage.getItem('t3-4f-state')||'{}'); }catch(e){ state={}; }
-if(!Object.keys(state).length) state={...SEED};
-function paint(){
-  let a=0,t=0;
-  Object.keys(els).forEach(k=>{
-    const v=state[k];
-    els[k].classList.toggle('avail',v==='avail');
-    els[k].classList.toggle('taken',v==='taken');
+function paint(key){
+  const o=F[key]; let a=0,t=0;
+  Object.keys(o.els).forEach(k=>{
+    const v=o.state[k];
+    o.els[k].classList.toggle('avail',v==='avail');
+    o.els[k].classList.toggle('taken',v==='taken');
     if(v==='avail')a++; else if(v==='taken')t++;
   });
-  document.getElementById('cAvail').textContent=a;
-  document.getElementById('cTaken').textContent=t;
-  document.getElementById('cFree').textContent=Object.keys(els).length-a-t;
-  try{ localStorage.setItem('t3-4f-state',JSON.stringify(state)); }catch(e){}
+  document.getElementById(key==='3f'?'cnt3':'cnt4').textContent=a;
+  if(key===active){
+    document.getElementById('cAvail').textContent=a;
+    document.getElementById('cTaken').textContent=t;
+    document.getElementById('cFree').textContent=Object.keys(o.els).length-a-t;
+  }
+  try{ localStorage.setItem(o.fl.ls,JSON.stringify(o.state)); }catch(e){}
 }
-paint();
-let db=null, ref=null;
-function setSync(mode,txt){ const d=document.getElementById('syncDot'); d.className=mode; document.getElementById('syncTxt').textContent=txt; }
-try{
-  if(typeof FIREBASE_CONFIG!=='undefined' && FIREBASE_CONFIG.apiKey){
-    firebase.initializeApp(FIREBASE_CONFIG);
-    db=firebase.database(); ref=db.ref('t3-4f/spots');
-    ref.on('value',snap=>{
-      const v=snap.val();
-      if(v===null){ ref.set(SEED); state={...SEED}; }
-      else state=v;
-      paint(); setSync('live','live — shared');
-    },err=>setSync('off','offline — this phone only'));
-    db.ref('.info/connected').on('value',s=>{ if(s.val()===true) setSync('live','live — shared'); else setSync('off','offline — this phone only'); });
-  } else setSync('off','this phone only');
-}catch(e){ setSync('off','this phone only'); }
-function cycle(num){
-  const cur=state[num];
+function cycle(key,id){
+  const o=F[key]; const cur=o.state[id];
   const nxt= cur==='avail' ? 'taken' : cur==='taken' ? null : 'avail';
-  if(nxt) state[num]=nxt; else delete state[num];
-  paint();
-  if(ref){ const c=ref.child(num); nxt? c.set(nxt) : c.remove(); }
+  if(nxt) o.state[id]=nxt; else delete o.state[id];
+  paint(key);
+  if(o.ref){ const c=o.ref.child(id); nxt? c.set(nxt) : c.remove(); }
 }
-document.getElementById('resetBtn').addEventListener('click',()=>{
-  if(!confirm('Clear ALL marks on the map for everyone?')) return;
-  state={}; paint();
-  if(ref) ref.set(null);
+function showFloor(key){
+  active=key;
+  Object.entries(FLOORS).forEach(([k,fl])=>{
+    document.getElementById(fl.pane).classList.toggle('on',k===key);
+    document.getElementById(fl.tab).classList.toggle('on',k===key);
+  });
+  paint(key);
+}
+document.getElementById('tab3').addEventListener('click',()=>showFloor('3f'));
+document.getElementById('tab4').addEventListener('click',()=>showFloor('4f'));
+document.getElementById('availSwitch').addEventListener('click',function(){
+  this.classList.toggle('on'); document.body.classList.toggle('only-avail',this.classList.contains('on'));
 });
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  const o=F[active];
+  if(!confirm('Clear ALL marks on the '+(active==='3f'?'3rd':'4th')+' floor — for everyone?')) return;
+  o.state={}; paint(active); if(o.ref) o.ref.set(null);
+});
+Object.keys(F).forEach(k=>paint(k));
+function setSync(mode,txt){ const s=document.getElementById('sync'); s.className='sync '+mode; document.getElementById('syncTxt').textContent=txt; }
+try{
+  firebase.initializeApp(FIREBASE_CONFIG);
+  const db=firebase.database();
+  Object.entries(F).forEach(([key,o])=>{
+    o.ref=db.ref(o.fl.node);
+    o.ref.on('value',snap=>{
+      const v=snap.val();
+      if(v===null){ o.ref.set(o.fl.seed); o.state={...o.fl.seed}; }
+      else o.state=v;
+      paint(key);
+    });
+  });
+  db.ref('.info/connected').on('value',s=>{ if(s.val()===true) setSync('live','Live · shared'); else setSync('off','Offline · this phone'); });
+}catch(e){ setSync('off','Offline · this phone'); }
 </script>
 </body>
 </html>
